@@ -14,13 +14,11 @@ describe('Product routes', () => {
   describe('/api/products/', () => {
     const gimliAxe = 'Two Handed Axe'
     const axePrice = 1337.00
-    const axeCategories = 'dwarf, weapon'
 
     beforeEach(() => {
       return Product.create({
         title: gimliAxe,
-        price: axePrice,
-        categories: axeCategories
+        price: axePrice
       })
     })
 
@@ -32,19 +30,17 @@ describe('Product routes', () => {
           expect(res.body).to.be.an('array')
           expect(res.body[0].title).to.be.equal(gimliAxe)
           expect(res.body[0].description).to.be.equal(null)
-          expect(res.body[0].categories.length).to.be.equal(2)
         })
     })
 
     it('POST /api/products', () => {
       return request(app)
         .post('/api/products')
-        .send({title: 'Rusty Sword', price: 0.99, categories: 'antique, weapon, cheap'})
+        .send({title: 'Rusty Sword', price: 0.99})
         .expect(201)
         .then(res => {
           expect(res.body).to.be.an('object')
           expect(res.body.title).to.be.equal('Rusty Sword')
-          expect(res.body.categories.length).to.be.equal(3)
         })
     })
 
