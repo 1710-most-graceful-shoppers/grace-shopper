@@ -4,7 +4,7 @@ import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import SingleProduct, {Main, Login, Signup, UserHome} from './components'
-import {me} from './store'
+import {me, getProductsFromServer} from './store'
 
 /**
  * COMPONENT
@@ -12,6 +12,7 @@ import {me} from './store'
 class Routes extends Component {
   componentDidMount () {
     this.props.loadInitialData()
+    this.props.loadProducts()
   }
 
   render () {
@@ -56,6 +57,9 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
+    },
+    loadProducts() {
+      dispatch(getProductsFromServer())
     }
   }
 }

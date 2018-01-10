@@ -14,15 +14,10 @@ const dummyData = [{
 ]
 
 class SingleProduct extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      products: dummyData
-    }
-  }
+
   render() {
     const {products, productId} = this.props;
-    const product = this.state.products.find((ele) => ele.id === Number(productId))
+    const product = products.find((ele) => ele.id === Number(productId))
     return product ?
     (
       <div>

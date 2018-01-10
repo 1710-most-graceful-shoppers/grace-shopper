@@ -4,7 +4,7 @@ const GOT_PRODUCTS_FROM_SERVER = 'GOT_PRODUCTS_FROM_SERVER';
 
 export function getProductsFromServer() {
   return (dispatch) => {
-    axios.get('api/products')
+    axios.get('/api/products')
     .then(res => dispatch(gotProducts(res.data)))
     .catch(console.error);
   }
