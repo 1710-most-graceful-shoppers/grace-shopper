@@ -20,10 +20,21 @@ form div {
   display: inline-block;
 }
 
+.product-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .card {
     /* Add shadows to create the "card" effect */
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
+    margin: 10px;
+    height: 200px;
+    width: 200px;
+    padding: 10px;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -34,4 +45,26 @@ form div {
 /* Add some padding inside the card container */
 .container {
     padding: 2px 16px;
+}
+
+.product-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 150px;
+  padding-top: 5px;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 4px;
+}
+
+.product-name {
+  font-weight: bold;
+}
+
+.product-price {
+  justify-content: left;
 }

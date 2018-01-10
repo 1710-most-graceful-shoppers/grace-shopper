@@ -10,7 +10,18 @@
  * Now that you've got the main idea, check it out in practice below!
  */
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {Product} = require('../server/db/models')
+
+// const prod = [
+//   {title: 'Small Sword', price: 10, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: ['Sword']},
+//   {title: 'Big Sword', price: 20, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: ['Sword']},
+//   {title: 'Demon Blade', price: 80, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: ['Sword']},
+//   {title: 'Crystal Blade', price: 100, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: ['Sword']},
+//   {title: 'Broadsword', price: 70, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: ['Sword']},
+//   {title: 'Katana', price: 70, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: ['Sword']},
+//   {title: 'Cursed Blase', price: 120, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: ['Sword']},
+//   {title: 'Master Sword', price: 400, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: ['Sword']},
+// ]
 
 async function seed () {
   await db.sync({force: true})
@@ -18,13 +29,19 @@ async function seed () {
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
 
-  const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+  const products = await Promise.all([
+    Product.create({title: 'Small Sword', price: 10, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: 'Sword'}),
+    Product.create({title: 'Big Sword', price: 20, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: 'Sword'}),
+    Product.create({title: 'Demon Blade', price: 80, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: 'Sword'}),
+    Product.create({title: 'Crystal Blade', price: 100, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: 'Sword'}),
+    Product.create({title: 'Broadsword', price: 70, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: 'Sword'}),
+    Product.create({title: 'Katana', price: 70, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: 'Sword'}),
+    Product.create({title: 'Cursed Blase', price: 120, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: 'Sword'}),
+    Product.create({title: 'Master Sword', price: 400, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: 'Sword'})
   ])
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
-  console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${products.length} users`)
   console.log(`seeded successfully`)
 }
 
