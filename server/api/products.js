@@ -20,12 +20,18 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   Product.create(req.body)
-    .then(product => res.send(product))
+    .then(product => res.status(201).send(product))
     .catch(next)
 })
 
 router.put('/:id', (req, res, next) => {
   req.product.update(req.body)
     .then(product => res.send(product))
+    .catch(next)
+})
+
+router.delete('/:id', (req, res, next) => {
+  req.product.destroy()
+    .then(() => res.sendStatus(204))
     .catch(next)
 })

@@ -13,7 +13,7 @@ describe('Product routes', () => {
 
   describe('/api/products/', () => {
     const gimliAxe = 'Two Handed Axe'
-    const axePrice = '1337.00'
+    const axePrice = 1337.00
     const axeCategories = 'dwarf, weapon'
 
     beforeEach(() => {
@@ -35,5 +35,42 @@ describe('Product routes', () => {
           expect(res.body[0].categories.length).to.be.equal(2)
         })
     })
-  }) // end describe('/api/products')
-}) // end describe('Product routes')
+
+    it('POST /api/products', () => {
+      return request(app)
+        .post('/api/products')
+        .send({title: 'Rusty Sword', price: 0.99, categories: 'antique, weapon, cheap'})
+        .expect(201)
+        .then(res => {
+          expect(res.body).to.be.an('object')
+          expect(res.body.title).to.be.equal('Rusty Sword')
+          expect(res.body.categories.length).to.be.equal(3)
+        })
+    })
+
+    it('PUT /api/products/1', () => {
+      return request(app)
+        .put('/api/products/1')
+        .send({title: 'Friendship Ring'})
+        .then(res => {
+          expect(res.body).to.be.an('object');
+          expect(res.body.title).to.be.equal('Friendship Ring')
+        })
+    })
+
+    // What is the protocol on testing using Supertest
+    it('DELETE /api/products/1', () => {
+      return request(app)
+        .delete('/api/products/1')
+        .then(res => {
+          expect(res.status).to.be.equal(204)
+        })
+        .then(() => {
+          return Product.findAll({})
+        })
+        .then(products => {
+          expect(products.length).to.be.equal(0)
+        })
+    }) // end describe('/api/products')
+  }) // end describe('Product routes')
+})
