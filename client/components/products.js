@@ -16,16 +16,16 @@ const Products = (props) => {
   return (
     <div>
       <h1>Products</h1>
-      <table>
+      <table >
         {
           prod.map(product => (
-            <tbody key={product.id}>
+            <tbody key={product.id} class="card">
               <tr>
                 <td>
                   <img src={product.imageUrl} height="100" width="100"/>
                 </td>
               </tr>
-              <tr>
+              <tr class="container">
                 <td>
                   {product.name}
                 </td>
