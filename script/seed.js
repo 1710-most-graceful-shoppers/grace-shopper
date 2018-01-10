@@ -37,19 +37,16 @@ async function seed () {
   ])
 
   const products = await Promise.all([
-    Product.create({title: 'Small Sword', price: 10, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}),
-    Product.create({title: 'Big Sword', price: 20, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}),
-    Product.create({title: 'Demon Blade', price: 80, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}),
-    Product.create({title: 'Crystal Blade', price: 100, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}),
-    Product.create({title: 'Broadsword', price: 70, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}),
-    Product.create({title: 'Katana', price: 70, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}),
-    Product.create({title: 'Cursed Blase', price: 120, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}),
-    Product.create({title: 'Master Sword', price: 400, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'})
+    Product.create({title: 'Small Sword', price: 10, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Big Sword', price: 20, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Demon Blade', price: 80, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Crystal Blade', price: 100, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Broadsword', price: 70, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Katana', price: 70, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Cursed Blase', price: 120, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Master Sword', price: 400, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0]))
   ])
 
-  const CPassociation = await Promise.all(products.map(product => {
-    product.addCategory(categories[0])
-  }))
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
   console.log(`seeded ${products.length} users`)

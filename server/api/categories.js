@@ -2,7 +2,7 @@ const CategoryRouter = require('express').Router();
 const {Category, Product} = require('../db/models');
 
 CategoryRouter.param('id', (req, res, next, id) => {
-  Category.findById(Number(id), {include: [{model: Product}]})
+  Category.findById(Number(id))
   .then(category => {
     if (!category) {
       let err = new Error('No category found')
@@ -18,13 +18,31 @@ CategoryRouter.param('id', (req, res, next, id) => {
 })
 
 CategoryRouter.get('/', (req, res, next) => {
-  Category.findAll()
+  Category.findAll({include: [{model: Product}]})
   .then(categories => res.json(categories))
   .catch(next);
 })
 
 CategoryRouter.get('/:id', (req, res, next) => {
   res.json(req.category)
+})
+
+CategoryRouter.post('/', (req, res, next) => {
+  Category.create(req.body)
+  .then(category => res.json(category))
+  .catch(next);
+})
+
+CategoryRouter.put('/:id', (req, res, next) => {
+  req.category.update(req.body)
+  .then(category => res.json(category))
+  .catch(next);
+})
+
+CategoryRouter.delete('/:id', (req, res, next) => {
+  req.category.destroy()
+  .then(() => res.sendStatus(204))
+  .catch(next);
 })
 
 module.exports = CategoryRouter;
