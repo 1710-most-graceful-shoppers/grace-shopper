@@ -16,13 +16,6 @@ const Product = db.define('product', {
   imageUrl: {
     type: Sequelize.STRING,
     defaultValue: '/ProductModel/defaultPhoto.jpeg'
-  },
-  categories: {
-    type: Sequelize.ARRAY(Sequelize.STRING),
-    allowNull: false,
-    set (str) {
-      this.setDataValue('categories', str.split(', '));
-    }
   }
 })
 
