@@ -5,9 +5,15 @@ module.exports = router
 router.param('id', (req, res, next, id) => {
   Product.findById(id)
     .then(product => {
-      if (!product) return console.log("No product found")
-      req.product = product
-      next()
+      if (!product) {
+        let err = new Error('No Product Found');
+        err.status = 404;
+        next(err);
+      }
+      else {
+        req.product = product
+        next()
+      }
     })
     .catch(next)
 })
