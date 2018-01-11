@@ -26,9 +26,5 @@ describe('Product model', () => {
     it('properly updates the database PRICE', () => {
       expect(newProduct.price).to.be.equal('49.50')
     })
-
-    it('properly updates the database CATEGORIES', () => {
-      expect(newProduct.categories[0]).to.be.equal('sword')
-    })
   })
 })

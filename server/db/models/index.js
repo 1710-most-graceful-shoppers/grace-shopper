@@ -1,5 +1,6 @@
 const User = require('./user')
 const Product = require('./product');
+const Category = require('./category')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -7,6 +8,9 @@ const Product = require('./product');
  *
  *    BlogPost.belongsTo(User)
  */
+//CG: Underscore between table names would be more appropriate
+Category.belongsToMany(Product, {through: 'ProductCategory'})
+Product.belongsToMany(Category, {through: 'ProductCategory'})
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -16,5 +20,6 @@ const Product = require('./product');
  */
 module.exports = {
   User,
-  Product
+  Product,
+  Category
 }

@@ -10,7 +10,7 @@
  * Now that you've got the main idea, check it out in practice below!
  */
 const db = require('../server/db')
-const {Product} = require('../server/db/models')
+const {Product, Category} = require('../server/db/models')
 
 // const prod = [
 //   {title: 'Small Sword', price: 10, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: ['Sword']},
@@ -28,17 +28,25 @@ async function seed () {
   console.log('db synced!')
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
+  const categories = await Promise.all([
+    Category.create({name: 'Sword'}),
+    Category.create({name: 'Weapon'}),
+    Category.create({name: 'Armor'}),
+    Category.create({name: 'Spear'}),
+    Category.create({name: 'Shield'})
+  ])
 
   const products = await Promise.all([
-    Product.create({title: 'Small Sword', price: 10, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: 'Sword'}),
-    Product.create({title: 'Big Sword', price: 20, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: 'Sword'}),
-    Product.create({title: 'Demon Blade', price: 80, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: 'Sword'}),
-    Product.create({title: 'Crystal Blade', price: 100, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: 'Sword'}),
-    Product.create({title: 'Broadsword', price: 70, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: 'Sword'}),
-    Product.create({title: 'Katana', price: 70, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: 'Sword'}),
-    Product.create({title: 'Cursed Blase', price: 120, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: 'Sword'}),
-    Product.create({title: 'Master Sword', price: 400, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg', categories: 'Sword'})
+    Product.create({title: 'Small Sword', price: 10, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Big Sword', price: 20, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Demon Blade', price: 80, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Crystal Blade', price: 100, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Broadsword', price: 70, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Katana', price: 70, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Cursed Blase', price: 120, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Master Sword', price: 400, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0]))
   ])
+
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
   console.log(`seeded ${products.length} users`)
