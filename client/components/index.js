@@ -7,5 +7,6 @@ export {default as Main} from './main'
 export {default as UserHome} from './user-home'
 export {default as Products} from './products'
 export {Login, Signup} from './auth-form'
-import SingleProduct from './SingleProduct'
-export default SingleProduct;
+export {default as SingleProduct} from './SingleProduct.js';
+export {default as Cart} from './Cart'
+export {default as CartView} from './CartView';
