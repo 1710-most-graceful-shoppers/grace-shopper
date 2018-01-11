@@ -66,7 +66,6 @@ class Products extends Component {
       input: event.target.value.toLowerCase()
     })
   }
-
 }
 
 /**
@@ -84,6 +83,4 @@ const mapDispatch = (dispatch) => {
   }
 }
 
-// The `withRouter` wrapper makes sure that updates are not blocked
-// when the url changes
 export default connect(mapState, mapDispatch)(Products)
