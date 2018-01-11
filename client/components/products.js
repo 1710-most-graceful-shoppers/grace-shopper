@@ -2,11 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import {addCartIdToSession} from '../store';
 
 
 const Products = (props) => {
 
-  const {products} = props
+  const {products, addToCart} = props
 
   return (
     <div>
@@ -14,7 +15,8 @@ const Products = (props) => {
       <div className="product-container">
         {
           products.map(product => (
-            <NavLink to={`/products/${product.id}`} key={product.id}>
+            <div key={product.id}>
+            <NavLink to={`/products/${product.id}`} >
             <div className="card">
               <div>
                 <div>
@@ -31,6 +33,9 @@ const Products = (props) => {
               </div>
             </div>
           </NavLink>
+          <button onClick={() => addToCart(product.id)} >Add me to cart!
+          </button>
+          </div>
             )
           )
         }
@@ -49,7 +54,9 @@ const mapState = (state) => {
 }
 
 const mapDispatch = (dispatch) => {
-  return {}
+  return {
+    addToCart: (id) => dispatch(addCartIdToSession(id))
+  }
 }
 
 // The `withRouter` wrapper makes sure that updates are not blocked
