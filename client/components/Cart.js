@@ -7,6 +7,7 @@ class Cart extends Component {
     this.buttonClick = this.buttonClick.bind(this);
   }
 
+  //CG: Please don't commit console.logs
   buttonClick() {
     if (!JSON.parse(localStorage.getItem('count'))) localStorage.setItem('count', 0);
     console.log('yes')
@@ -17,7 +18,7 @@ class Cart extends Component {
   render() {
     return (
       <div>
-      <button onClick={this.buttonClick}>Click to add to storage! Local Storage: {localStorage.count}</button>
+        <button onClick={this.buttonClick}>Click to add to storage! Local Storage: {localStorage.count}</button>
       </div>
     )
   }

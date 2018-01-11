@@ -22,19 +22,20 @@ class Products extends Component {
       <div>
         <div className="product-header">
           <h1 className="product-title">All Products</h1>
-            <form className="product-filter" style={{marginTop: '20px'}}>
-              <input
-              className="product-filter-input"
-              placeholder="Filter Products"
-              onChange={this.handleChange}
-              />
-            </form>
-          </div>
+          <form className="product-filter" style={{marginTop: '20px'}}>
+            <input
+            className="product-filter-input"
+            placeholder="Filter Products"
+            onChange={this.handleChange}
+            />
+          </form>
+        </div>
         <div className="product-container">
           {
             products.map(product => (
               <div key={product.id}>
               <NavLink to={`/products/${product.id}`} >
+              {/* CG: We can pull this out into separate component  */}
               <div className="card">
                 <div>
                   <div>

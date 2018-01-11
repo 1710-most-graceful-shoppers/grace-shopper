@@ -2,6 +2,9 @@ const router = require('express').Router()
 const {Product} = require('../db/models')
 module.exports = router
 
+//CG NOTES
+// /api/products?category=puppies
+
 router.param('id', (req, res, next, id) => {
   Product.findById(id)
     .then(product => {
@@ -19,6 +22,10 @@ router.param('id', (req, res, next, id) => {
 })
 
 router.get('/', (req, res, next) => {
+  // if(req.query){
+  //   Object.keys(req.query);
+
+  // }
   Product.findAll()
     .then(products => res.send(products))
     .catch(next)

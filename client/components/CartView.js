@@ -9,15 +9,18 @@ class CartView extends Component {
   render() {
     const {products, cartIds} = this.props;
     const cartProducts = products.filter(product => Object.keys(cartIds).map(cardId => Number(cardId)).includes(product.id))
+    //CG: no console.log in commited code. 
     console.log(Object.keys(cartIds))
     return (
-      <ul>
-      {cartProducts.map(product => {
-        return (
-          <li key={product.id}>{product.title} quantity: {cartIds[product.id]}</li>
+      <div className="cart">
+        <ul>
+        {cartProducts.map(product => {
+          return (
+            <li className="cart-item" key={product.id}>{product.title} quantity: {cartIds[product.id]}</li>
+          )}
         )}
-      )}
-      </ul>
+        </ul>
+      </div>
     )
   }
 }

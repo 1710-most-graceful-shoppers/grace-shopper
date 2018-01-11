@@ -13,3 +13,22 @@ cartSessionRouter.put('/', (req, res, next) => {
 })
 
 module.exports = cartSessionRouter;
+
+// /api/users/:id/cart
+// /api/users/:id/orders 
+
+//what's a cart???
+//all of the products that a user wants to buy. 
+//This thing that relates to products and relates to a user/session. 
+
+//what's an order?
+//EXACTYLY THE SAME THING except it's bought already.
+//can't be changed.
+//prices become fixed.
+
+//what does an order need?
+//order number
+//just the userid
+//some boolean representing if the order was placed.
+
+//we need a separate join table to connect orders-products.

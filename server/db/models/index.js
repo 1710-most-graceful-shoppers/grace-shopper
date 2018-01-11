@@ -8,6 +8,7 @@ const Category = require('./category')
  *
  *    BlogPost.belongsTo(User)
  */
+//CG: Underscore between table names would be more appropriate
 Category.belongsToMany(Product, {through: 'ProductCategory'})
 Product.belongsToMany(Category, {through: 'ProductCategory'})
 
