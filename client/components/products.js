@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import {addCartIdToSession} from '../store';
+import {Sidebar} from './index'
 
 
 class Products extends Component {
@@ -21,15 +22,21 @@ class Products extends Component {
     return (
       <div>
         <div className="product-header">
-          <h1 className="product-title">All Products</h1>
-          <form className="product-filter" style={{marginTop: '20px'}}>
+          <div className="product-title-container">
+            <h1 className="product-title">All Products</h1>
+          </div>
+          <div className="product-filter">
             <input
             className="product-filter-input"
             placeholder="Filter Products"
             onChange={this.handleChange}
             />
-          </form>
         </div>
+        </div>
+        <div className="view-container">
+          <div className="sidebar-container">
+            <Sidebar />
+          </div>
         <div className="product-container">
           {
             products.map(product => (
@@ -39,7 +46,7 @@ class Products extends Component {
               <div className="card">
                 <div>
                   <div>
-                    <img src={product.imageUrl} className="product-image"/>
+                    <img src={product.imageUrl} className="product-image" />
                   </div>
                 </div>
                 <div className="product-info">
@@ -49,15 +56,17 @@ class Products extends Component {
                   <div className="product-price">
                     {product.price} Coins
                   </div>
+                  <button className="product-add" onClick={() => addToCart(product.id)}>
+                    Add to cart
+                  </button>
                 </div>
               </div>
             </NavLink>
-            <button onClick={() => addToCart(product.id)} >Add me to cart!
-            </button>
             </div>
               )
             )
           }
+        </div>
         </div>
       </div>
     )
