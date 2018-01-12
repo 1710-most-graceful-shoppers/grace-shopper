@@ -16,6 +16,7 @@ function gotProducts (products) {
     products
   }
 }
+
 export default function productsReducer(initialState = [], action) {
   switch (action.type) {
     case GOT_PRODUCTS_FROM_SERVER:

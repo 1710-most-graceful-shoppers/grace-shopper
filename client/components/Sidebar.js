@@ -5,18 +5,18 @@ import { connect } from 'react-redux'
 const Sidebar = (props) => {
   const { categories } = props
   return (
-    <sidebar>
+    <div className="sidebar">
       <h3>Categories</h3>
       {
         categories.map(category => (
           <section key={category.id}>
             <h4 className="menu-item">
-              <Link to={`/categories/${category.id}`}>{category.name}</Link>
+              <Link to={`/products/${category.name}`}>{category.name}</Link>
             </h4>
           </section>
         ))
       }
-    </sidebar>
+    </div>
   )
 }
 
@@ -26,8 +26,6 @@ const mapState = (state) => {
   }
 }
 
-const mapDispatch = (dispatch) => {
-  return {}
-}
+const mapDispatch = null;
 
 export default connect(mapState, mapDispatch)(Sidebar)

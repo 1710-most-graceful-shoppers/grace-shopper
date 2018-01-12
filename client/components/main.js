@@ -16,8 +16,8 @@ const Main = (props) => {
 
   return (
     <div>
-      <h1>Sherwood</h1>
       <nav>
+        <h1 className="main-title">Sherwood</h1>
         {
           isLoggedIn
             ? <div>
@@ -30,9 +30,11 @@ const Main = (props) => {
             </div>
             : <div>
               {/* The navbar will show these links before you log in */}
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
               <Link to="/products">Products</Link>
+              <div className="main-auth">
+                <Link to="/login">Login</Link>
+                <Link to="/signup">Sign Up</Link>
+              </div>
               <Cart />
             </div>
         }

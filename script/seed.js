@@ -43,8 +43,11 @@ async function seed () {
     Product.create({title: 'Crystal Blade', price: 100, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
     Product.create({title: 'Broadsword', price: 70, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
     Product.create({title: 'Katana', price: 70, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
-    Product.create({title: 'Cursed Blase', price: 120, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
-    Product.create({title: 'Master Sword', price: 400, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0]))
+    Product.create({title: 'Cursed Blade', price: 120, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Master Sword', price: 400, imageUrl: 'http://www.cbswords.com/images/157022_157051.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Wooden Shield', price: 10, imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/51gtlpuTneL._SY300_.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Iron Shield', price: 80, imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/51gtlpuTneL._SY300_.jpg'}).then(product => product.addCategory(categories[0])),
+    Product.create({title: 'Blessed Shield', price: 400, imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/51gtlpuTneL._SY300_.jpg'}).then(product => product.addCategory(categories[0]))
   ])
 
   // Wowzers! We can even `await` on the right-hand side of the assignment operator

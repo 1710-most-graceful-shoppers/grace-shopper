@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const Product = db.define('product', {
-  //CG: right now a product title could be an empty string. 
+  //CG: right now a product title could be an empty string
   title: {
     type: Sequelize.STRING,
     allowNull: false
