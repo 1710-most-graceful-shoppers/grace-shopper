@@ -7,7 +7,7 @@ const Order = db.define('order', {
     defaultValue: false
   }, //defines if it is a 'cart' or 'order'
   status: {
-    type: Sequelize.ENUM('Created', 'Processing', 'Cancelled', 'Completed'),
+    type: Sequelize.ENUM('Created', 'Processing', 'Cancelled', 'Completed')
   },
 },
   {
@@ -18,6 +18,6 @@ const Order = db.define('order', {
       }
     }
   }
-})
+});
 
 module.exports = Order;
