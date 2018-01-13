@@ -18,6 +18,28 @@ router.param('id', (req, res, next, id) => {
   .catch(next);
 })
 
+router.param('cartId', (req, res, next, cartId) => {
+  Order.findById(cartId, {
+    include: [
+      {
+        model: Product
+      }
+    ]
+  })
+  .then(cart => {
+    if (!cart) {
+      let err = new Error('Nonexistent cart, something wrong with user');
+      err.status(412);
+      next(err);
+    }
+    else {
+      req.user.cart = cart;
+      next();
+    }
+  })
+  .catch(next)
+})
+
 router.get('/', (req, res, next) => {
   User.findAll({
     // explicitly select only the id and email fields - even though
@@ -50,21 +72,8 @@ router.get('/:id/orders', (req, res, next) => {
 });
 
 //getting a logged-in user cart.
-router.get('/:id/cart', (req, res, next) => {
-  req.user.getOrders({
-    where: {
-      isSold: false
-    },
-    include: [
-      {
-        model: Product
-      }
-    ]
-  })
-  .then(cart => {
-    cart.length === 0 ? res.json(cart) : res.json(cart[0].products)
-  })
-  .catch(next);
+router.get('/:id/:cartId', (req, res, next) => {
+  res.json(req.user.cart)
 })
 
 //assumes the CART will be updated with whatever information we need, and will change whenever this changes
@@ -82,30 +91,30 @@ router.get('/:id/cart', (req, res, next) => {
 //buy (submit) will update cart with all current prices, quantities, and change isSold to true. this will update the updateTime field as well.
 
 //all further updates to change the 'status' will be SILENT to not affect the updated timestamp.
-router.put('/:id/cart', (req, res, next) => {
-  req.user.getOrders({
-    where: {
-      isSold: false
-    },
-    include: [
-      {
-        model: Product
-      }
-    ]
-  })
-  .then(cart => {
-    if (!cart.length) {
-      Order.create({
-        isSold: false,
-        userId: Number(req.user.id)
+router.put('/:id/:cartId', (req, res, next) => {
+  const {productId, quantity} = req.body;
+
+  Product.findById(productId)
+  .then(product => {
+    let productFinder = req.user.cart.products.findIndex(prod => Number(prod.id) === Number(product.id))
+    if (productFinder !== -1) {
+      return req.user.cart.setProducts([product], {
+        through: {
+          quantity: req.user.cart.products[productFinder].product_order.quantity + quantity,
+          price: product.price
+        }
       })
-      .then(unsoldOrder => {
-        //req.body = [{productId, quantity},...]
-        return Promise.all(req.body.map(({productId, quantity}) => {
-          unsoldOrder.addProduct(productId, {through: { quantity , price: productId}})
-        }))
+    } else {
+      return req.user.cart.addProduct(product, {
+        through: {
+          quantity: 1,
+          price: product.price
+        }
       })
     }
+  })
+  .then(product => {
+    res.json(product)
   })
   .catch(next);
 })
