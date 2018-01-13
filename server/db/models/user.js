@@ -5,12 +5,16 @@ const db = require('../db')
 const User = db.define('user', {
   //CG: might want to consider some stronger validations.
   //maybe make some sort of email validation here as well.
-  //consider that an empty string is NOT null. 
-  
+  //consider that an empty string is NOT null.
+
   email: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      isEmail: true,
+      notEmpty: true
+    }
   },
   password: {
     type: Sequelize.STRING
@@ -21,7 +25,7 @@ const User = db.define('user', {
   googleId: {
     type: Sequelize.STRING
   }
-})
+});
 
 module.exports = User
 

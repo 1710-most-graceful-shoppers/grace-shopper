@@ -2,25 +2,37 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const Product = db.define('product', {
-  //CG: right now a product title could be an empty string
   title: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   description: {
     type: Sequelize.TEXT
   },
-  //CG: need quantity.
-  //Consider actually storing values as an int.
-  //price and quantity can't be negative.
+  inventory: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    validate: {
+      min: 0  // Do we need backorders?
+    }
+  },
   price: {
-    type: Sequelize.DECIMAL,
-    allowNull: false
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    validate: {
+      min: 0
+    }
   },
   imageUrl: {
     type: Sequelize.STRING,
-    defaultValue: '/ProductModel/defaultPhoto.jpeg'
+    defaultValue: 'https://c1-zingpopculture.eb-cdn.com.au/merchandising/images/packshots/12614b928df84f41ab1c08f472b58b51_Large.png',
+    validate: {
+      isUrl: true
+    }
   }
-})
+});
 
 module.exports = Product;
