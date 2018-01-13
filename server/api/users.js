@@ -117,4 +117,11 @@ router.put('/:id/:cartId', (req, res, next) => {
     res.json(product)
   })
   .catch(next);
-})
+});
+
+router.delete('/:id/:cartId', (req, res, next) => {
+  const {productId} = req.body;
+  req.user.cart.removeProducts([productId])
+  .then(() => res.sendStatus(204))
+  .catch(next);
+});
