@@ -28,7 +28,7 @@ export function deleteFromCart(userId, productId) {
   return (dispatch) => {
     axios.delete(`/api/users/${userId}/cart`, {
       data: {
-      productId
+        productId
       }
     })
     .then(() => dispatch(fetchCart(userId)))
