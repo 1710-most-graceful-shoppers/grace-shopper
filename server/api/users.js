@@ -20,8 +20,12 @@ router.param('id', (req, res, next, id) => {
 })
 
 //obtaining the order # of the cart => do we want to make a cart if there is no cart? or have login make the cart?
-router.param('cartId', (req, res, next, cartId) => {
-  Order.findById(cartId, {
+function cartHelper(req, res, next) {
+  Order.findOne({
+    where: {
+      userId: req.user.id,
+      isSold: false
+    },
     include: [
       {
         model: Product
@@ -40,7 +44,7 @@ router.param('cartId', (req, res, next, cartId) => {
     }
   })
   .catch(next)
-})
+}
 
 router.get('/', (req, res, next) => {
   User.findAll({
@@ -74,7 +78,7 @@ router.get('/:id/orders', (req, res, next) => {
 });
 
 //getting a logged-in user cart.
-router.get('/:id/:cartId', (req, res, next) => {
+router.get('/:id/cart', cartHelper, (req, res, next) => {
   res.json(req.user.cart)
 })
 
@@ -93,14 +97,17 @@ router.get('/:id/:cartId', (req, res, next) => {
 //buy (submit) will update cart with all current prices, quantities, and change isSold to true. this will update the updateTime field as well.
 
 //all further updates to change the 'status' will be SILENT to not affect the updated timestamp.
-router.put('/:id/:cartId', (req, res, next) => {
+
+//setProducts method may overwrite all of your other instances - very confusing. Unsure if this happened earlier.
+//but addProduct will update the current join table instance if it is already created! Convenient!
+router.put('/:id/cart', cartHelper, (req, res, next) => {
   const {productId, quantity} = req.body;
 
   Product.findById(productId)
   .then(product => {
     let productFinder = req.user.cart.products.findIndex(prod => Number(prod.id) === Number(product.id))
     if (productFinder !== -1) {
-      return req.user.cart.setProducts([product], {
+      return req.user.cart.addProduct(product, {
         through: {
           quantity: req.user.cart.products[productFinder].product_order.quantity + quantity,
           price: product.price
@@ -121,7 +128,7 @@ router.put('/:id/:cartId', (req, res, next) => {
   .catch(next);
 });
 
-router.delete('/:id/:cartId', (req, res, next) => {
+router.delete('/:id/cart', cartHelper, (req, res, next) => {
   const {productId} = req.body;
   req.user.cart.removeProducts([productId])
   .then(() => res.sendStatus(204))

@@ -4,7 +4,7 @@ import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import {SingleProduct, Main, Login, Signup, UserHome, Products, Cart} from './components'
-import {me, getProductsFromServer, getCartIdsFromSession, getCategoriesFromServer} from './store'
+import {me, getProductsFromServer, fetchCart, getCategoriesFromServer} from './store'
 
 /**
  * COMPONENT
@@ -13,13 +13,11 @@ class Routes extends Component {
   componentDidMount () {
     this.props.loadInitialData()
     this.props.loadProducts()
-    // this.props.loadCart()
     // this.props.loadCategories()
   }
 
   render () {
     const {isLoggedIn} = this.props
-
     return (
       <Router history={history}>
         <Main>
@@ -29,7 +27,7 @@ class Routes extends Component {
             <Route path="/signup" component={Signup} />
             <Route exact path="/products" component={Products} />
             <Route path="/products/:productId" component={SingleProduct} />
-            {/*<Route path="/cart" component={CartView} />*/}
+            <Route path="/cart" component={Cart} />
             {
               isLoggedIn &&
                 <Switch>
@@ -53,7 +51,9 @@ const mapState = (state) => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    userId: state.user.id,
+    userCartId: state.userCart.id
   }
 }
 
@@ -65,8 +65,8 @@ const mapDispatch = (dispatch) => {
     loadProducts() {
       dispatch(getProductsFromServer())
     },
-    loadCart() {
-      dispatch(getCartIdsFromSession())
+    loadCart(userId) {
+      dispatch(fetchCart(userId))
     },
     loadCategories() {
       dispatch(getCategoriesFromServer())

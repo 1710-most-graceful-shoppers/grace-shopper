@@ -3,32 +3,37 @@ import axios from 'axios';
 const GOT_CART = 'GOT_CART';
 const CLEAR_CART = 'CLEAR_CART';
 
-export function fetchCart(userId, cartId) {
+export function fetchCart(userId) {
   return (dispatch) => {
-    axios.get(`/api/users/${userId}/${cartId}`)
+    axios.get(`/api/users/${userId}/cart`)
     .then(response => response.data)
     .then(userCart => dispatch(gotCart(userCart)))
     .catch(console.error);
   }
 }
 
-export function updateCart(userId, cartId, productId, quantity) {
+export function updateCart(userId, productId, quantity) {
   return (dispatch) => {
-    axios.put(`/api/users/${userId}/${cartId}`, {
+    axios.put(`/api/users/${userId}/cart`, {
       productId,
       quantity
     })
-    .then(() => dispatch(fetchCart(userId, cartId)))
+    .then(() => dispatch(fetchCart(userId)))
     .catch(console.error);
   }
 }
 
-export function deleteFromCart(userId, cartId, productId) {
-  return (dispatch => {
-    axios.delete(`/api/users/${userId}/${cartId}`, {productId})
-    .then(() => dispatch(fetchCart(userId, cartId)))
+export function deleteFromCart(userId, productId) {
+  console.log(productId)
+  return (dispatch) => {
+    axios.delete(`/api/users/${userId}/cart`, {
+      data: {
+      productId
+      }
+    })
+    .then(() => dispatch(fetchCart(userId)))
     .catch(console.error);
-  })
+  }
 }
 
 function gotCart(userCart) {
@@ -38,7 +43,7 @@ function gotCart(userCart) {
   }
 }
 
-function clearCart(userCart) {
+export function clearCart() {
   return {
     type: CLEAR_CART
   }
