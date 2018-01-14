@@ -17,7 +17,6 @@ export class Products extends Component {
   }
 
   render() {
-    const {addToCart} = this.props
     const products = this.props.products.filter(product => product.title.toLowerCase().match(this.state.input))
 
     return (
@@ -44,7 +43,6 @@ export class Products extends Component {
                   </NavLink>
                 </div>
                 )
-
               )
             }
           </div>

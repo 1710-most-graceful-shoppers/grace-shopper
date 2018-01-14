@@ -1,27 +1,28 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {connect} from 'react-redux';
 
-class Cart extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {count: localStorage.getItem('count')};
-    this.buttonClick = this.buttonClick.bind(this);
-  }
-
-  //CG: Please don't commit console.logs
-  buttonClick() {
-    if (!JSON.parse(localStorage.getItem('count'))) localStorage.setItem('count', 0);
-    console.log('yes')
-    localStorage.setItem('count', JSON.parse(localStorage.getItem('count'))+1);
-    this.setState({count: localStorage.getItem('count')})
-  }
-
-  render() {
-    return (
-      <div>
-        <button onClick={this.buttonClick}>Click to add to storage! Local Storage: {localStorage.count}</button>
+function Cart(props) {
+  const {products, cartIds} = props;
+  const cartProducts = products.filter(product => Object.keys(cartIds).map(cardId => Number(cardId)).includes(product.id))
+  return (
+      <div className="cart">
+        <ul>
+        {cartProducts.map(product => {
+          return (
+            <li className="cart-item" key={product.id}>{product.title} quantity: {cartIds[product.id]}</li>
+          )}
+        )}
+        </ul>
       </div>
-    )
+  )
+}
+
+
+const mapStateToProps = (state) => {
+  return {
+    products: state.products,
+    cartIds: state.cartIds
   }
 }
 
-export default Cart;
+export default connect(mapStateToProps)(Cart)

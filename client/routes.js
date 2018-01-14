@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {SingleProduct, Main, Login, Signup, UserHome, Products, CartView} from './components'
+import {SingleProduct, Main, Login, Signup, UserHome, Products, Cart} from './components'
 import {me, getProductsFromServer, getCartIdsFromSession, getCategoriesFromServer} from './store'
 
 /**
@@ -13,8 +13,8 @@ class Routes extends Component {
   componentDidMount () {
     this.props.loadInitialData()
     this.props.loadProducts()
-    this.props.loadCart()
-    this.props.loadCategories()
+    // this.props.loadCart()
+    // this.props.loadCategories()
   }
 
   render () {
@@ -29,7 +29,7 @@ class Routes extends Component {
             <Route path="/signup" component={Signup} />
             <Route exact path="/products" component={Products} />
             <Route path="/products/:productId" component={SingleProduct} />
-            <Route path="/cart" component={CartView} />
+            {/*<Route path="/cart" component={CartView} />*/}
             {
               isLoggedIn &&
                 <Switch>

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Product} = require('../db/models')
+const {Product, Review, User} = require('../db/models')
 module.exports = router
 
 //CG NOTES
@@ -26,7 +26,21 @@ router.get('/', (req, res, next) => {
   //   Object.keys(req.query);
 
   // }
-  Product.findAll()
+  Product.findAll({
+    include: [
+      {
+        model: Review,
+        include: [
+          {
+            model: User,
+            attributes: [
+              'email'
+            ]
+          }
+        ]
+      }
+    ]
+  })
     .then(products => res.send(products))
     .catch(next)
 })

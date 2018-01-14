@@ -9,5 +9,5 @@ export {default as Products} from './Products'
 export {default as Sidebar} from './Sidebar'
 export {Login, Signup} from './auth-form'
 export {default as SingleProduct} from './SingleProduct.js';
-export {default as Cart} from './Cart'
-export {default as CartView} from './CartView';
+export {default as Cart} from './Cart';
+export {default as Reviews} from './Reviews';

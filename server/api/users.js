@@ -2,6 +2,7 @@ const router = require('express').Router()
 const {User, Product, Product_Order, Order} = require('../db/models')
 module.exports = router
 
+//Obtaining the user.
 router.param('id', (req, res, next, id) => {
   User.findById(id)
   .then(user => {
@@ -18,6 +19,7 @@ router.param('id', (req, res, next, id) => {
   .catch(next);
 })
 
+//obtaining the order # of the cart => do we want to make a cart if there is no cart? or have login make the cart?
 router.param('cartId', (req, res, next, cartId) => {
   Order.findById(cartId, {
     include: [

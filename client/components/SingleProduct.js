@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Reviews from './index.js';
+import {Reviews} from './index.js';
 
 class SingleProduct extends Component {
 
@@ -17,6 +17,9 @@ class SingleProduct extends Component {
           <img src={product.imageUrl} />
         </div>
         <h3>REVIEWS</h3>
+        <div>
+          <Reviews reviews={product.reviews} />
+        </div>
       </div>
     ) : null;
   }

@@ -1,3 +1,5 @@
+//should not need a category router if we will be dealing with query statuses when we search by category
+
 const CategoryRouter = require('express').Router();
 const {Category, Product} = require('../db/models');
 
