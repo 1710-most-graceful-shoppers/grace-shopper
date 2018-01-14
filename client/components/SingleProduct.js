@@ -1,17 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Reviews from './index.js';
-
-const dummyData = [{
-  id: 1,
-  title: 'Sword',
-  description: 'Such a heavy sword',
-  price: '35',
-  imageUrl: '/ProductModel/defaultPhoto.jpeg',
-  categories: ['amazing', 'heavy'],
-  reviews: []
-}
-]
+// import Reviews from './index.js';
 
 class SingleProduct extends Component {
 

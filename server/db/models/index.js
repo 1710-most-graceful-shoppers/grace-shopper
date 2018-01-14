@@ -9,8 +9,8 @@ const Category = require('./category')
  *    BlogPost.belongsTo(User)
  */
 //CG: Underscore between table names would be more appropriate
-Category.belongsToMany(Product, {through: 'ProductCategory'})
-Product.belongsToMany(Category, {through: 'ProductCategory'})
+Category.belongsToMany(Product, {through: 'product_category'})
+Product.belongsToMany(Category, {through: 'product_category'})
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -21,5 +21,5 @@ Product.belongsToMany(Category, {through: 'ProductCategory'})
 module.exports = {
   User,
   Product,
-  Category
+  Category,
 }

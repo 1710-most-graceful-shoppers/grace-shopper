@@ -1,9 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { updateProductListing } from '../store'
 
 const Sidebar = (props) => {
-  const { categories } = props
+  const { categories, handleClick } = props
   return (
     <div className="sidebar">
       <h3>Categories</h3>
@@ -11,7 +12,7 @@ const Sidebar = (props) => {
         categories.map(category => (
           <section key={category.id}>
             <h4 className="menu-item">
-              <Link to={`/products/${category.name}`}>{category.name}</Link>
+              <a href="#" name={category.name} onClick={handleClick}>{category.name}</a >
             </h4>
           </section>
         ))
@@ -26,6 +27,12 @@ const mapState = (state) => {
   }
 }
 
-const mapDispatch = null;
+const mapDispatch = (dispatch, ownProps) => {
+  return {
+    handleClick: function(evt){
+      dispatch(updateProductListing(evt.target.name))
+    }
+  }
+}
 
 export default connect(mapState, mapDispatch)(Sidebar)

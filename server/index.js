@@ -53,7 +53,6 @@ const createApp = () => {
 
   app.use((req, res, next) => {
     req.session.cartIds =  req.session.cartIds || {};
-    console.log(req.session)
     next();
   })
   // auth and api routes

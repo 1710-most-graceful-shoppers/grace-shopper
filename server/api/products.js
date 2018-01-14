@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Product} = require('../db/models')
+const { Product, Category } = require('../db/models')
 module.exports = router
 
 //CG NOTES
@@ -22,13 +22,21 @@ router.param('id', (req, res, next, id) => {
 })
 
 router.get('/', (req, res, next) => {
-  // if(req.query){
-  //   Object.keys(req.query);
-
-  // }
   Product.findAll()
     .then(products => res.send(products))
     .catch(next)
+})
+
+router.get('/categories/:name', (req, res, next) => {
+  console.log('category route running')
+  Category.findAll({
+    where: {
+      name: req.params.name
+    },
+    include: [{model: Product}]
+  })
+  .then(category => res.json(category))
+  .catch(next);
 })
 
 router.post('/', (req, res, next) => {
