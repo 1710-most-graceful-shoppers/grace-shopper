@@ -36,8 +36,8 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   addMe: (userId, productId) => {userId ? dispatch(updateCart(userId, productId, 1)) : dispatch(updateSessionCart(productId, 1))},
-  subtractMe: (userId, productId) => {userId ? dispatch(updateCart(userId, productId, 1)) : dispatch(updateSessionCart(productId, -1))},
-  deleteMe: (userId, productId) => {userId ? dispatch(deleteFromCart(userId, productId, 1)) : dispatch(deleteFromSessionCart(productId, 1))}
+  subtractMe: (userId, productId) => {userId ? dispatch(updateCart(userId, productId, -1)) : dispatch(updateSessionCart(productId, -1))},
+  deleteMe: (userId, productId) => {userId ? dispatch(deleteFromCart(userId, productId)) : dispatch(deleteFromSessionCart(productId))}
 })
 
 export default connect(mapState, mapDispatch)(Cart);
