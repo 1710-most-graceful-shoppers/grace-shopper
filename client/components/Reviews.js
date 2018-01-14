@@ -1,23 +1,16 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
-import {connect} from 'react-redux';
 
-//need information for the Review model
 const Reviews = (props) => {
   let {reviews} = props;
   return (
-    <ul>
+    <div>
     {reviews.map(review => (
-      <li key={review.id}>{review}</li>
+      <div key={review.id}>
+        <h4>{review.user.email} said: I give this product {review.rating} stars out of 5! {review.text}</h4>
+      </div>
     ))}
-    </ul>
+    </div>
   )
 }
 
-const mapState = (state) => {
-  return {
-    products: state.products
-  }
-}
-
-export default withRouter(connect(mapState)(Reviews));
+export default Reviews;

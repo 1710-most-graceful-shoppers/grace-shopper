@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import {addCartIdToSession} from '../store';
+import {addCartIdToSession, updateCart, updateSessionCart} from '../store';
 
 import Card from './Card'
 
@@ -17,9 +17,8 @@ export class Products extends Component {
   }
 
   render() {
-    const {addToCart} = this.props
     const products = this.props.products.filter(product => product.title.toLowerCase().match(this.state.input))
-
+    const {addMe, userId} = this.props;
     return (
       <div>
         <div className="product-header">
@@ -42,9 +41,9 @@ export class Products extends Component {
                   <NavLink to={`/products/${product.id}`} >
                     <Card productInfo={product} />
                   </NavLink>
+                  <button onClick={() => {addMe(userId, product.id)}}>Add me to cart!</button>
                 </div>
                 )
-
               )
             }
           </div>
@@ -64,13 +63,15 @@ export class Products extends Component {
  */
 const mapState = (state) => {
   return {
+    userId: state.user.id,
     products: state.products
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    addToCart: (id) => dispatch(addCartIdToSession(id))
+    addToCart: (id) => dispatch(addCartIdToSession(id)),
+    addMe: (userId, productId) => {userId ? dispatch(updateCart(userId, productId, 1)) : dispatch(updateSessionCart(productId, 1))}
   }
 }
 

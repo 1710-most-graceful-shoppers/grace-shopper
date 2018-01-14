@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
-import {Cart} from './index';
 
 /**
  * COMPONENT
@@ -12,8 +11,10 @@ import {Cart} from './index';
  *  rendered out by the component's `children`.
  */
 const Main = (props) => {
-  const {children, handleClick, isLoggedIn} = props
-
+  const {children, handleClick, isLoggedIn, userCart, sessionCart} = props
+  const cart = isLoggedIn ? userCart : sessionCart;
+  const items = cart.products ? cart.products.reduce((accum, product
+   ) => product.product_order.quantity + accum, 0) : 0;
   return (
     <div>
       <nav>
@@ -25,17 +26,16 @@ const Main = (props) => {
               <Link to="/home">Home</Link>
               <a href="#" onClick={handleClick}>Logout</a>
               <Link to="/products">Products</Link>
-              <Link to="/cart">Cart View</Link>
-              <Cart />
+              <Link to="/cart">Cart ({items})</Link>
             </div>
             : <div>
               {/* The navbar will show these links before you log in */}
               <Link to="/products">Products</Link>
+              <Link to="/cart">Cart ({items})</Link>
               <div className="main-auth">
                 <Link to="/login">Login</Link>
                 <Link to="/signup">Sign Up</Link>
               </div>
-              <Cart />
             </div>
         }
       </nav>
@@ -50,7 +50,9 @@ const Main = (props) => {
  */
 const mapState = (state) => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    userCart: state.userCart,
+    sessionCart: state.sessionCart
   }
 }
 
