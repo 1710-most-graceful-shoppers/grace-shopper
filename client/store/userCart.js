@@ -24,7 +24,6 @@ export function updateCart(userId, productId, quantity) {
 }
 
 export function deleteFromCart(userId, productId) {
-  console.log(productId)
   return (dispatch) => {
     axios.delete(`/api/users/${userId}/cart`, {
       data: {

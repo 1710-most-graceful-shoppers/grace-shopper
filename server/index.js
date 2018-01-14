@@ -52,8 +52,9 @@ const createApp = () => {
   app.use(passport.session())
 
   app.use((req, res, next) => {
-    req.session.cartIds =  req.session.cartIds || {};
-    console.log(req.session)
+    req.session.cart =  req.session.cart || {
+      products: []
+    };
     next();
   })
   // auth and api routes

@@ -31,7 +31,7 @@ const Main = (props) => {
             : <div>
               {/* The navbar will show these links before you log in */}
               <Link to="/products">Products</Link>
-              <Link to="/cart">Cart</Link>
+              <Link to="/cart">Cart ({items})</Link>
               <div className="main-auth">
                 <Link to="/login">Login</Link>
                 <Link to="/signup">Sign Up</Link>

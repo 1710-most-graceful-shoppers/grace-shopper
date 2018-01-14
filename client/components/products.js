@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import {addCartIdToSession, updateCart} from '../store';
+import {addCartIdToSession, updateCart, updateSessionCart} from '../store';
 
 import Card from './Card'
 
@@ -71,7 +71,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     addToCart: (id) => dispatch(addCartIdToSession(id)),
-    addMe: (userId, productId) => dispatch(updateCart(userId, productId, 1))
+    addMe: (userId, productId) => {userId ? dispatch(updateCart(userId, productId, 1)) : dispatch(updateSessionCart(productId, 1))}
   }
 }
 

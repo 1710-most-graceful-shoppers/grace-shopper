@@ -1,11 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {updateCart, deleteFromCart} from '../store';
+import {updateCart, updateSessionCart, deleteFromCart, deleteFromSessionCart} from '../store';
 
 const Cart = (props) => {
-  const {userId, isLoggedIn, sessionCart, userCart, addMe, subtractMe, deleteMe} = props;
-  const cart = isLoggedIn ? userCart : sessionCart;
+  const {userId, sessionCart, userCart, addMe, subtractMe, deleteMe} = props;
+  const cart = userId ? userCart : sessionCart;
   let totalCost = 0;
   return cart.products ? (
     <div className="cart">
@@ -30,15 +30,14 @@ const Cart = (props) => {
 
 const mapState = (state) => ({
   userId: state.user.id,
-  isLoggedIn: !!state.user,
   sessionCart: state.sessionCart,
   userCart: state.userCart
 });
 
 const mapDispatch = (dispatch) => ({
-  addMe: (userId, productId) => dispatch(updateCart(userId, productId, 1)),
-  subtractMe: (userId, productId) => dispatch(updateCart(userId, productId, -1)),
-  deleteMe: (userId, productId) => dispatch(deleteFromCart(userId, productId))
+  addMe: (userId, productId) => {userId ? dispatch(updateCart(userId, productId, 1)) : dispatch(updateSessionCart(productId, 1))},
+  subtractMe: (userId, productId) => {userId ? dispatch(updateCart(userId, productId, 1)) : dispatch(updateSessionCart(productId, -1))},
+  deleteMe: (userId, productId) => {userId ? dispatch(deleteFromCart(userId, productId, 1)) : dispatch(deleteFromSessionCart(productId, 1))}
 })
 
 export default connect(mapState, mapDispatch)(Cart);

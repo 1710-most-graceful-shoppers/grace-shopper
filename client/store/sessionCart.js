@@ -1,33 +1,54 @@
 import axios from 'axios';
+//this cart is for a non-logged in user
 
-const GOT_CART_IDS = 'GOT_CART_IDS';
+const GOT_SESSION_CART = 'GOT_SESSION_CART';
+const CLEAR_SESSION_CART = 'CLEAR_SESSION';
 
-const gotCartIds = (cartIds) => (
-  {type: GOT_CART_IDS,
-  cartIds}
-)
-
-export function addCartIdToSession(id) {
+export function updateSessionCart(productId, quantity) {
   return (dispatch) => {
-  axios.put('/api/session/cartIds', {id})
-  .then(() => dispatch(getCartIdsFromSession()))
+  axios.put('/api/sessions/cart', {
+    productId,
+    quantity
+  })
+  .then(() => dispatch(fetchSessionCart()))
   .catch(console.error);
   }
 }
 
-export function getCartIdsFromSession() {
+export function deleteFromSessionCart(productId) {
   return (dispatch) => {
-    axios.get('/api/session/cartIds')
-    .then(response => dispatch(gotCartIds(response.data)))
+    axios.delete(`/api/sessions/cart`, {
+      data: {
+        productId
+      }
+    })
+    .then(() => dispatch(fetchSessionCart()))
+    .catch(console.error);
+  }
+}
+
+export function fetchSessionCart() {
+  return (dispatch) => {
+    axios.get('/api/sessions/cart')
+    .then(response => dispatch(gotSessionCart(response.data)))
     .catch(console.error)
   }
 }
 
-export default (cartIds = {}, action) => {
+function gotSessionCart (sessionCart) {
+  return {
+    type: GOT_SESSION_CART,
+    sessionCart
+  }
+}
+
+export default (sessionCart = {}, action) => {
   switch (action.type) {
-    case GOT_CART_IDS:
-      return action.cartIds;
+    case GOT_SESSION_CART:
+      return action.sessionCart;
+    case CLEAR_SESSION_CART:
+      return {};
     default:
-      return cartIds;
+      return sessionCart;
   }
 }

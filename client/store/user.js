@@ -1,6 +1,6 @@
 import axios from 'axios'
 import history from '../history'
-import {fetchCart, clearCart} from './index';
+import {fetchCart, fetchSessionCart, deleteFromSessionCart} from './index';
 
 /**
  * ACTION TYPES
@@ -27,7 +27,7 @@ export const me = () =>
     axios.get('/auth/me')
       .then(res => {
         dispatch(getUser(res.data || defaultUser))
-        res.data ? dispatch(fetchCart(res.data.id)) : dispatch(clearCart());
+        res.data ? dispatch(fetchCart(res.data.id)) : dispatch(fetchSessionCart());
       })
       .catch(err => console.log(err))
 
@@ -35,8 +35,8 @@ export const auth = (email, password, method) =>
   dispatch =>
     axios.post(`/auth/${method}`, { email, password })
       .then(res => {
-        dispatch(getUser(res.data))
-        dispatch(fetchCart(res.data.id))
+        dispatch(getUser(res.data));
+        dispatch(fetchCart(res.data.id));
         history.push('/home')
       }, authError => { // rare example: a good use case for parallel (non-catch) error handler
         dispatch(getUser({error: authError}))
@@ -47,7 +47,7 @@ export const logout = () =>
   dispatch =>
     axios.post('/auth/logout')
       .then(_ => {
-        dispatch(clearCart())
+        dispatch(deleteFromSessionCart())
         dispatch(removeUser())
         history.push('/login')
       })

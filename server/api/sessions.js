@@ -1,18 +1,50 @@
-const sessionRouter = require('express').Router();
+const router = require('express').Router();
+const {Product, Order} = require('../db/models');
 
-sessionRouter.get('/', (req, res, next) => {
-  res.json(req.session.cartIds)
+router.get('/cart', (req, res, next) => {
+  res.json(req.session.cart)
 })
 
-sessionRouter.put('/', (req, res, next) => {
-  // req.session.cookie.cartIds[req.body.id] = 1;
-  req.session.cartIds[req.body.id] = req.session.cartIds[req.body.id] || 0;
-  req.session.cartIds[req.body.id] = req.session.cartIds[req.body.id] + 1;
-  console.log(req.session)
-  res.json(req.session.cartIds);
+router.put('/cart', (req, res, next) => {
+  const {productId, quantity} = req.body;
+  const index = req.session.cart.products.findIndex(product => Number(product.id) === Number(productId));
+
+  Product.findById(productId)
+  .then(product => {
+    if (index !== -1) {
+      req.session.cart.products[index].product_order.quantity += quantity;
+    }
+    else {
+     req.session.cart.products.push({
+       id: product.id,
+       title: product.title,
+       description: product.description,
+       inventory: product.inventory,
+       price: product.price,
+       imageUrl: product.imageUrl,
+       product_order: {
+         quantity: quantity
+       }
+     });
+    }
+    res.json(req.session.cart);
+   })
+  .catch(next);
 })
 
-module.exports = sessionRouter;
+router.delete('/cart', (req, res, next) => {
+  const {productId} = req.body;
+  if (!productId) {
+    req.session.cart = {products: []};
+  }
+  else {
+    const index = req.session.cart.products.findIndex(product => Number(product.id) === Number(productId));
+    req.session.cart.products.splice(index, 1);
+  }
+  res.json(req.session.cart);
+})
+
+module.exports = router;
 
 // /api/users/:id/cart
 // /api/users/:id/orders

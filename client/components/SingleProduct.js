@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Reviews} from './index.js';
-import {updateCart} from '../store';
+import {updateCart, updateSessionCart} from '../store';
 
 const SingleProduct = (props) => {
     const {products, productId, addMe, userId} = props;
@@ -34,7 +34,7 @@ const mapState = (state, ownProps) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    addMe: (userId, productId) => dispatch(updateCart(userId, productId, 1))
+    addMe: (userId, productId) => {userId ? dispatch(updateCart(userId, productId, 1)) : dispatch(updateSessionCart(productId, 1))}
   }
 };
 
