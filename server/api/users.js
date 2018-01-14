@@ -21,10 +21,13 @@ router.param('id', (req, res, next, id) => {
 
 //obtaining the order # of the cart => do we want to make a cart if there is no cart? or have login make the cart?
 function cartHelper(req, res, next) {
-  Order.findOne({
+  Order.findOrCreate({
     where: {
       userId: req.user.id,
       isSold: false
+    },
+    defaults: {
+      userId: req.user.id
     },
     include: [
       {
@@ -32,16 +35,9 @@ function cartHelper(req, res, next) {
       }
     ]
   })
-  .then(cart => {
-    if (!cart) {
-      let err = new Error('Nonexistent cart, something wrong with user');
-      err.status(412);
-      next(err);
-    }
-    else {
-      req.user.cart = cart;
-      next();
-    }
+  .spread((cart, isCreated) => {
+    req.user.cart = cart;
+    next();
   })
   .catch(next)
 }
