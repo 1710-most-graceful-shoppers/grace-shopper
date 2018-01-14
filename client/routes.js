@@ -13,7 +13,7 @@ class Routes extends Component {
   componentDidMount () {
     this.props.loadInitialData()
     this.props.loadProducts()
-    // this.props.loadCategories()
+    this.props.loadCategories()
   }
 
   render () {

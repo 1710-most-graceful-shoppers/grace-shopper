@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import {addCartIdToSession, updateCart, updateSessionCart} from '../store';
-
+import {Sidebar} from './index'
 import Card from './Card'
 
 
@@ -19,6 +19,7 @@ export class Products extends Component {
   render() {
     const products = this.props.products.filter(product => product.title.toLowerCase().match(this.state.input))
     const {addMe, userId} = this.props;
+    console.log(this.props)
     return (
       <div>
         <div className="product-header">
@@ -34,6 +35,9 @@ export class Products extends Component {
           </div>
         </div>
         <div className="view-container">
+          <div className="sidebar-container">
+            <Sidebar />
+          </div>
           <div className="product-container">
             {
               products.map(product => (

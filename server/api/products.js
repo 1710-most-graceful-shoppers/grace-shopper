@@ -1,9 +1,6 @@
 const router = require('express').Router()
-const {Product, Review, User} = require('../db/models')
+const { Product, Category, Review, User } = require('../db/models')
 module.exports = router
-
-//CG NOTES
-// /api/products?category=puppies
 
 router.param('id', (req, res, next, id) => {
   Product.findById(id)
@@ -22,10 +19,6 @@ router.param('id', (req, res, next, id) => {
 })
 
 router.get('/', (req, res, next) => {
-  // if(req.query){
-  //   Object.keys(req.query);
-
-  // }
   Product.findAll({
     include: [
       {
@@ -43,6 +36,17 @@ router.get('/', (req, res, next) => {
   })
     .then(products => res.send(products))
     .catch(next)
+})
+
+router.get('/categories/:name', (req, res, next) => {
+  Category.findAll({
+    where: {
+      name: req.params.name
+    },
+    include: [{model: Product}]
+  })
+  .then(category => res.json(category))
+  .catch(next);
 })
 
 router.post('/', (req, res, next) => {
