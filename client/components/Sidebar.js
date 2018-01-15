@@ -5,6 +5,7 @@ import { updateProductListing } from '../store'
 
 const Sidebar = (props) => {
   const { categories, handleClick } = props
+
   return (
     <div className="sidebar">
       <h3>Categories</h3>
@@ -21,16 +22,18 @@ const Sidebar = (props) => {
   )
 }
 
-const mapState = (state) => {
+const mapState = (state, history) => {
   return {
-    categories: state.categories
+    categories: state.categories,
+    history: history
   }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, history) => {
+  let props = history.ownProps
   return {
     handleClick: function(evt){
-      dispatch(updateProductListing(evt.target.name))
+      dispatch(updateProductListing(evt.target.name, props))
     }
   }
 }

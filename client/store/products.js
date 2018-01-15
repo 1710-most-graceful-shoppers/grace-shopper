@@ -11,10 +11,13 @@ export function getProductsFromServer() {
   }
 }
 
-export function updateProductListing(category){
+export function updateProductListing(category, props){
   return (dispatch) => {
     axios.get(`/api/products/categories/${category}`)
-    .then(res => dispatch(updateProducts(res.data[0].products)))
+    .then(res => {
+      dispatch(updateProducts(res.data[0].products))
+      props.history.push(`/products/${category}`)
+    })
     .catch(console.error);
   }
 }

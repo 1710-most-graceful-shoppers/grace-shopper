@@ -12,7 +12,7 @@ import {me, getProductsFromServer, fetchCart, getCategoriesFromServer} from './s
 class Routes extends Component {
   componentDidMount () {
     this.props.loadInitialData()
-    this.props.loadProducts()
+    // this.props.loadProducts() //Products currently being loaded in Product component
     this.props.loadCategories()
   }
 
@@ -25,8 +25,9 @@ class Routes extends Component {
             {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route exact path="/products" component={Products} />
-            <Route path="/products/:productId" component={SingleProduct} />
+            <Route path="/products/:category/:productId" component={SingleProduct} />
+            <Route path="/products/:category" component={Products} />
+            <Route path="/products/" component={Products} />
             <Route path="/cart" component={Cart} />
             {
               isLoggedIn &&

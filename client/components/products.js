@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import {addCartIdToSession, updateCart, updateSessionCart} from '../store';
+import {addCartIdToSession, updateCart, updateSessionCart, updateProductListing, getProductsFromServer } from '../store';
 import {Sidebar} from './index'
 import Card from './Card'
 
@@ -16,9 +16,18 @@ export class Products extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
+  componentDidMount(){
+    let category = this.props.match.params.category
+    if (category) {
+      this.props.updateProducts(category)
+    } else {
+      this.props.loadProducts()
+    }
+  }
+
   render() {
     const products = this.props.products.filter(product => product.title.toLowerCase().match(this.state.input))
-    const {addMe, userId} = this.props;
+    const {addMe, userId, ownProps } = this.props;
     return (
       <div>
         <div className="product-header">
@@ -35,7 +44,7 @@ export class Products extends Component {
         </div>
         <div className="view-container">
           <div className="sidebar-container">
-            <Sidebar />
+            <Sidebar ownProps={ownProps} />
           </div>
           <div className="product-container">
             {
@@ -64,17 +73,20 @@ export class Products extends Component {
 /**
  * CONTAINER
  */
-const mapState = (state) => {
+const mapState = (state, ownProps) => {
   return {
     userId: state.user.id,
-    products: state.products
+    products: state.products,
+    ownProps: ownProps
   }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, ownProps) => {
   return {
     addToCart: (id) => dispatch(addCartIdToSession(id)),
-    addMe: (userId, productId) => {userId ? dispatch(updateCart(userId, productId, 1)) : dispatch(updateSessionCart(productId, 1))}
+    addMe: (userId, productId) => {userId ? dispatch(updateCart(userId, productId, 1)) : dispatch(updateSessionCart(productId, 1))},
+    updateProducts: (name) => dispatch(updateProductListing(name, ownProps)),
+    loadProducts: () => dispatch(getProductsFromServer())
   }
 }
 
