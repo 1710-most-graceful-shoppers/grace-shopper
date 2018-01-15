@@ -12,7 +12,7 @@ import {me, getProductsFromServer, fetchCart, getCategoriesFromServer} from './s
 class Routes extends Component {
   componentDidMount () {
     this.props.loadInitialData()
-    // this.props.loadProducts() //Products currently being loaded in Product component
+    // this.props.loadProducts()// Products now loaded on Product component
     this.props.loadCategories()
   }
 

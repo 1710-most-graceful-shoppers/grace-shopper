@@ -50,7 +50,7 @@ export class Products extends Component {
             {
               products.map(product => (
                 <div key={product.id}>
-                  <NavLink to={`/products/${product.id}`} >
+                  <NavLink to={`/products/temp/${product.id}`} >
                     <Card productInfo={product} />
                   </NavLink>
                   <button onClick={() => {addMe(userId, product.id)}}>Add me to cart!</button>
