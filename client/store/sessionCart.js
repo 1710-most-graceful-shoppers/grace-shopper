@@ -27,6 +27,10 @@ export function deleteFromSessionCart(productId) {
   }
 }
 
+export function placeSessionOrder(checkoutInfo, sessionCart) {
+  console.log(sessionCart);
+}
+
 export function fetchSessionCart() {
   return (dispatch) => {
     axios.get('/api/sessions/cart')

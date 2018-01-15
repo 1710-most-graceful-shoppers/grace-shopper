@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {updateCart, updateSessionCart, deleteFromCart, deleteFromSessionCart} from '../store';
+import CheckoutForm from './CheckoutForm';
 
 const Cart = (props) => {
   const {userId, sessionCart, userCart, addMe, subtractMe, deleteMe} = props;
@@ -18,14 +19,18 @@ const Cart = (props) => {
             <button onClick={() => addMe(userId, product.id)}>+</button>
             <button
               onClick={() => subtractMe(userId, product.id)}
-              disabled={(product.product_order.quantity === 1)}>-</button>
+              disabled={(product.product_order.quantity === 1)}>
+              -
+            </button>
             <button onClick={() => deleteMe(userId, product.id)}>Remove Product</button>
           </h4>
           <h4>Current Price: {product.price} coins ; Subtotal: {product.price * product.product_order.quantity} coins</h4>
         </div>
       )
     })}
-    <h3>Total Cost: {totalCost} coins</h3><button>Checkout!</button>
+    <h3>Total Cost: {totalCost} coins</h3>
+    <button>Checkout!</button>
+    <CheckoutForm />
     </div>
   ) : null;
 };

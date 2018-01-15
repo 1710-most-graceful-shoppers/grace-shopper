@@ -35,6 +35,10 @@ export function deleteFromCart(userId, productId) {
   }
 }
 
+export function placeUserOrder(checkoutInfo, userId) {
+  console.log(userId)
+}
+
 function gotCart(userCart) {
   return {
     type: GOT_CART,
