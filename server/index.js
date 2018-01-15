@@ -55,7 +55,6 @@ const createApp = () => {
     req.session.cart =  req.session.cart || {
       products: []
     };
-    req.session.cartIds =  req.session.cartIds || {};
     next();
   })
   // auth and api routes

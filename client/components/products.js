@@ -19,7 +19,6 @@ export class Products extends Component {
   render() {
     const products = this.props.products.filter(product => product.title.toLowerCase().match(this.state.input))
     const {addMe, userId} = this.props;
-    console.log(this.props)
     return (
       <div>
         <div className="product-header">
