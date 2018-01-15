@@ -6,7 +6,7 @@ import {Sidebar} from './index'
 import Card from './Card'
 
 
-export class Products extends Component {
+class Products extends Component {
 
   constructor(props) {
     super(props);
@@ -53,7 +53,7 @@ export class Products extends Component {
                   <NavLink to={`/products/temp/${product.id}`} >
                     <Card productInfo={product} />
                   </NavLink>
-                  <button onClick={() => {addMe(userId, product.id)}}>Add me to cart!</button>
+                  <button className="product-add" onClick={() => {addMe(userId, product.id)}}>Add me to cart!</button>
                 </div>
                 )
               )
