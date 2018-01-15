@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import {addCartIdToSession, updateCart, updateSessionCart} from '../store';
-
+import {Sidebar} from './index'
 import Card from './Card'
 
 
@@ -34,6 +34,9 @@ export class Products extends Component {
           </div>
         </div>
         <div className="view-container">
+          <div className="sidebar-container">
+            <Sidebar />
+          </div>
           <div className="product-container">
             {
               products.map(product => (
