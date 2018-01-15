@@ -25,6 +25,8 @@ class Products extends Component {
     }
   }
 
+  //move handleChange here
+
   render() {
     const products = this.props.products.filter(product => product.title.toLowerCase().match(this.state.input))
     const {addMe, userId, ownProps } = this.props;
@@ -80,6 +82,8 @@ const mapState = (state, ownProps) => {
     ownProps: ownProps
   }
 }
+
+//Map dispatch should not contain logic?
 
 const mapDispatch = (dispatch, ownProps) => {
   return {

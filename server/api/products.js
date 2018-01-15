@@ -39,6 +39,10 @@ router.get('/:id', (req, res, next) => {
   .catch(next)
 })
 
+//This route won't get hit
+//Not restful
+//Use query params
+
 router.get('/categories/:name', (req, res, next) => {
   Category.findAll({
     where: {
