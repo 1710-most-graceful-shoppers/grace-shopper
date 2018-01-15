@@ -16,7 +16,9 @@ const Cart = (props) => {
           <Link to={`/products/${product.id}`}><h4>Name: {product.title}</h4></Link>
           <h4>Quantity: {product.product_order.quantity}
             <button onClick={() => addMe(userId, product.id)}>+</button>
-            <button onClick={() => subtractMe(userId, product.id)}>-</button>
+            <button
+              onClick={() => subtractMe(userId, product.id)}
+              disabled={(product.product_order.quantity === 1)}>-</button>
             <button onClick={() => deleteMe(userId, product.id)}>Remove Product</button>
           </h4>
           <h4>Current Price: {product.price} coins ; Subtotal: {product.price * product.product_order.quantity} coins</h4>
