@@ -1,14 +1,15 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux'
-import createLogger from 'redux-logger'
-import thunkMiddleware from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension'
-import user from './user'
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import createLogger from 'redux-logger';
+import thunkMiddleware from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import user from './user';
 import products from './products';
-import categories from './categories'
+import categories from './categories';
 import sessionCart from './sessionCart';
 import userCart from './userCart';
+import orders from './orders'
 
-const reducer = combineReducers({user, products, sessionCart, categories, userCart})
+const reducer = combineReducers({user, products, sessionCart, categories, userCart, orders})
 
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
