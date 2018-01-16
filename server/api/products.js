@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const { Product, Category, Review, User } = require('../db/models')
+const {isLoggedIn, isAdminOrSelf, isAdmin} = require('./utils');
 module.exports = router
 
 router.param('id', (req, res, next, id) => {
@@ -54,19 +55,19 @@ router.get('/categories/:name', (req, res, next) => {
   .catch(next);
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', isLoggedIn, isAdminOrSelf, isAdmin, (req, res, next) => {
   Product.create(req.body)
     .then(product => res.status(201).send(product))
     .catch(next)
 })
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', isLoggedIn, isAdminOrSelf, isAdmin, (req, res, next) => {
   req.product.update(req.body)
     .then(product => res.send(product))
     .catch(next)
 })
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', isLoggedIn, isAdminOrSelf, isAdmin, (req, res, next) => {
   req.product.destroy()
     .then(() => res.sendStatus(204))
     .catch(next)

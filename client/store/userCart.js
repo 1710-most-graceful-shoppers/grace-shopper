@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {deleteFromSessionCart} from './index';
 //this cart is for a LOGGED IN user, so this obtains information directly from the database, not the session.
 const GOT_CART = 'GOT_CART';
 const CLEAR_CART = 'CLEAR_CART';
@@ -7,7 +8,10 @@ export function fetchCart(userId) {
   return (dispatch) => {
     axios.get(`/api/users/${userId}/cart`)
     .then(response => response.data)
-    .then(userCart => dispatch(gotCart(userCart)))
+    .then(userCart => {
+      dispatch(gotCart(userCart));
+      dispatch(deleteFromSessionCart());
+    })
     .catch(console.error);
   }
 }

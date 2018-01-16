@@ -63,7 +63,7 @@ function addToCart(req, res, next) {
       req.user.cart = cart;
       const sessionProducts = Promise.all(req.session.cart.products.map(product => Product.findById(Number(product.id))));
 
-      sessionProducts
+      return sessionProducts
       .then(productsArr => {
         return Promise.all(productsArr.map((product, index) => {
           let productFinder = (req.user.cart.products) ? req.user.cart.products.findIndex(prod => Number(prod.id) === Number(product.id)) : -1;

@@ -23,7 +23,7 @@ const Order = db.define('order', {
     defaultValue: false
   }
 },
-  {
+  {//fix this.
   hooks: {
     beforeUpdate: (order) => {
       if (order.getDataValue('isSold')) {
