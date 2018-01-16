@@ -36,7 +36,6 @@ class Orders extends Component {
                     <div className="product-info">
                       {
                         order.products.map(product => {
-                          console.log(totalCost)
                           totalCost += product.product_order.quantity * product.product_order.price;
                           return (
                             <div key={product.id} className="cart-product">
