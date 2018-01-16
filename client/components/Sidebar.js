@@ -1,14 +1,16 @@
 import React from 'react'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { updateProductListing } from '../store'
+import { updateProductListing, getProductsFromServer } from '../store'
 
 const Sidebar = (props) => {
-  const { categories, handleClick } = props
+  const { categories, handleClick, loadProducts } = props
 
   return (
     <div className="sidebar">
-      <h3>Categories</h3>
+      <Link to="/products" onClick={loadProducts}>
+        <h3>Our Wares</h3>
+      </Link>
       {
         categories.map(category => (
           <section key={category.id}>
@@ -34,6 +36,9 @@ const mapDispatch = (dispatch, history) => {
   return {
     handleClick: function(evt){
       dispatch(updateProductListing(evt.target.name, props))
+    },
+    loadProducts: function() {
+      dispatch(getProductsFromServer())
     }
   }
 }

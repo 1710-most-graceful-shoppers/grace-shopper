@@ -25,7 +25,11 @@ class Products extends Component {
     }
   }
 
-  //move handleChange here
+  handleChange(event) {
+    this.setState({
+      input: event.target.value.toLowerCase()
+    })
+  }
 
   render() {
     const products = this.props.products.filter(product => product.title.toLowerCase().match(this.state.input))
@@ -64,11 +68,6 @@ class Products extends Component {
         </div>
       </div>
     )
-  }
-  handleChange(event) {
-    this.setState({
-      input: event.target.value.toLowerCase()
-    })
   }
 }
 
