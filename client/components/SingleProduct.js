@@ -74,7 +74,7 @@ class SingleProduct extends Component {
               </div>
               <hr />
               <div className="single-info-card-middle">
-                {
+                { product.reviews ?
                   product.reviews.map(review => (
                     <div className="review-container" key={review.id}>
                       <div className="review-info-top">
@@ -92,7 +92,7 @@ class SingleProduct extends Component {
                       <p>{review.text}</p>
                       <hr />
                     </div>
-                  ))
+                  )) : null
                 }
               </div>
               <hr />
