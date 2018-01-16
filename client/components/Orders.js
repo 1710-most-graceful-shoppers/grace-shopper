@@ -18,7 +18,7 @@ class Orders extends Component {
     let totalCost = 0;
     return (
       <div>
-        <h1>{isAdmin ? 'All Orders' : 'Your Orders'}</h1>
+        <h1>Orders</h1>
         <div className="orders-container">
           {
             orders.map(order => (
