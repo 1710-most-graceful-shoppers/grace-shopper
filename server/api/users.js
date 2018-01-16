@@ -56,6 +56,21 @@ router.get('/', isAdminOrSelf, isAdmin, (req, res, next) => {
     .catch(next)
 })
 
+router.get('/orders', isAdmin, (req, res, next) => {
+  Order.findAll({
+    where: {
+      isSold: true
+    },
+    include: [
+      {
+        model: Product
+      }
+    ]
+  })
+    .then(orders => res.json(orders))
+    .catch(next)
+})
+
 router.get('/:id', (req, res, next) => {
   res.json(req.user);
 })

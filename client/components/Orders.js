@@ -14,11 +14,11 @@ class Orders extends Component {
   }
 
   render() {
-    const { orders } = this.props;
+    const { orders, isAdmin } = this.props;
     let totalCost = 0;
     return (
       <div>
-        <h1>Orders</h1>
+        <h1>{isAdmin ? 'All Orders' : 'Your Orders'}</h1>
         <div className="orders-container">
           {
             orders.map(order => (
@@ -36,7 +36,7 @@ class Orders extends Component {
                     {
                       order.products.map(product => {
                         console.log(totalCost)
-                        totalCost += product.product_order.quantity * product.product_order.quantity.price;
+                        totalCost += product.product_order.quantity * product.product_order.price;
                         return (
                           <div key={product.id} className="cart-product">
                             <Link to={`/products/weapons/${product.id}`}><h4>Name: {product.title}</h4></Link>
@@ -65,6 +65,7 @@ class Orders extends Component {
 const mapState = (state) => {
   return {
     user: state.user,
+    isAdmin: !!state.user.isAdmin,
     orders: state.orders
    }
 }
