@@ -25,4 +25,5 @@ export * from './sessionCart';
 export * from './categories';
 export * from './userCart';
 export * from './orders';
+export * from './reviews';
 export * from './users';
