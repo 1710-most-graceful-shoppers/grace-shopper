@@ -9,10 +9,23 @@ const Order = db.define('order', {
   status: {
     type: Sequelize.ENUM('Created', 'Processing', 'Cancelled', 'Completed')
   },
+  address: {
+    type: Sequelize.TEXT
+  },
+  email: {
+    type: Sequelize.STRING,
+    validate: {
+      isEmail: true
+    }
+  },
+  coreyPromo: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  }
 },
   {
   hooks: {
-    afterUpdate: (order) => {
+    beforeUpdate: (order) => {
       if (order.getDataValue('isSold')) {
         order.setDataValue('status', 'Created')
       }

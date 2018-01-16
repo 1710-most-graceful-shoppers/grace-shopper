@@ -73,6 +73,12 @@ router.get('/:id/orders', (req, res, next) => {
   .catch(next);
 });
 
+router.post('/:id/orders', cartHelper, (req, res, next) => {
+  req.user.cart.update(req.body)
+  .then(newOrder => res.json(newOrder))
+  .catch(next);
+})
+
 //getting a logged-in user cart.
 router.get('/:id/cart', cartHelper, (req, res, next) => {
   res.json(req.user.cart)
@@ -101,7 +107,7 @@ router.put('/:id/cart', cartHelper, (req, res, next) => {
 
   Product.findById(productId)
   .then(product => {
-    let productFinder = req.user.cart.products.findIndex(prod => Number(prod.id) === Number(product.id))
+    let productFinder = (req.user.cart.products) ? req.user.cart.products.findIndex(prod => Number(prod.id) === Number(product.id)) : -1;
     if (productFinder !== -1) {
       return req.user.cart.addProduct(product, {
         through: {

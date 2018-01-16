@@ -44,6 +44,26 @@ router.delete('/cart', (req, res, next) => {
   res.json(req.session.cart);
 })
 
+router.post('/order', (req, res, next) => {
+  const {checkoutInfo, sessionCart} = req.body;
+  Order.create(checkoutInfo)
+  .then(order => Promise.all(sessionCart.products.map(product => {
+    return Product.findById(product.id)
+    .then(foundProduct => order.addProduct(foundProduct, {
+      through: {
+        quantity: product.product_order.quantity,
+        price: foundProduct.price
+      }
+    }))
+    .catch(next);
+  })))
+  .then(() => {
+    req.session.cart = {products: []};
+    res.json(req.session.cart);
+  })
+  .catch(next);
+})
+
 module.exports = router;
 
 // /api/users/:id/cart
