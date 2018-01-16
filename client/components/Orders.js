@@ -10,7 +10,7 @@ class Orders extends Component {
   }
 
   componentDidMount() {
-    this.props.loadOrders(this.props.user.id);
+    this.props.loadUserOrders(this.props.user.id);
   }
 
   render() {
@@ -72,7 +72,7 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    loadOrders: (userId) => dispatch(getOrders(userId))
+    loadUserOrders: (userId) => dispatch(getOrders(userId))
   }
 }
 
