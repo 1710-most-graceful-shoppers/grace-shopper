@@ -29,6 +29,7 @@ const Main = (props) => {
               <div className="main-auth">
                 <a href="#" onClick={handleClick}>Logout</a>
               </div>
+              {!!props.user.isAdmin && (<Link to="/users">Users (Admin View)</Link>)}
             </div>
             : <div>
               {/* The navbar will show these links before you log in */}
@@ -54,7 +55,8 @@ const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
     userCart: state.userCart,
-    sessionCart: state.sessionCart
+    sessionCart: state.sessionCart,
+    user: state.user
   }
 }
 

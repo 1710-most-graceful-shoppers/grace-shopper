@@ -45,12 +45,12 @@ function cartHelper(req, res, next) {
   .catch(next)
 }
 
-router.get('/', isAdminOrSelf, isAdmin, (req, res, next) => {
+router.get('/', isAdmin, (req, res, next) => {
   User.findAll({
     // explicitly select only the id and email fields - even though
     // users' passwords are encrypted, it won't help if we just
     // send everything to anyone who asks!
-    attributes: ['id', 'email']
+    attributes: ['id', 'email', 'isAdmin']
   })
     .then(users => res.json(users))
     .catch(next)
@@ -58,6 +58,18 @@ router.get('/', isAdminOrSelf, isAdmin, (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   res.json(req.user);
+})
+
+router.put('/:id', (req, res, next) => {
+  req.user.update(req.body)
+  .then(user => res.json(user))
+  .catch(next);
+})
+
+router.delete('/:id', (req, res, next) => {
+  req.user.destroy()
+  .then(() => res.sendStatus(204))
+  .catch(next);
 })
 
 //all orders

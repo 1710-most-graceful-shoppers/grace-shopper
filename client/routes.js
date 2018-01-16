@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {SingleProduct, Main, Login, Signup, UserHome, Products, Cart, Orders} from './components'
-import {me, getProductsFromServer, fetchCart, getCategoriesFromServer} from './store'
+import {SingleProduct, Main, Login, Signup, UserHome, Products, Cart, Orders, AdminUser} from './components'
+import {me, getProductsFromServer, fetchCart, getCategoriesFromServer, fetchUsers} from './store'
 
 /**
  * COMPONENT
@@ -14,6 +14,7 @@ class Routes extends Component {
     this.props.loadInitialData()
     // this.props.loadProducts()// Products now loaded on Product component
     this.props.loadCategories()
+    this.props.loadUsers()
   }
 
   render () {
@@ -29,6 +30,7 @@ class Routes extends Component {
             <Route path="/products/:category" component={Products} />
             <Route path="/products/" component={Products} />
             <Route path="/cart" component={Cart} />
+            <Route path="/users" component={AdminUser} />
             {
               isLoggedIn &&
                 <Switch>
@@ -72,6 +74,9 @@ const mapDispatch = (dispatch) => {
     },
     loadCategories() {
       dispatch(getCategoriesFromServer())
+    },
+    loadUsers() {
+      dispatch(fetchUsers())
     }
   }
 }
