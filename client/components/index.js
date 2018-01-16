@@ -11,3 +11,4 @@ export {Login, Signup} from './auth-form'
 export {default as SingleProduct} from './SingleProduct.js';
 export {default as Cart} from './Cart';
 export {default as Orders} from './Orders';
+export {default as AdminUser} from './AdminUser';

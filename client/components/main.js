@@ -28,6 +28,7 @@ const Main = (props) => {
               <Link to="/products">Products</Link>
               <Link to="/cart">Cart ({items})</Link>
               <Link to="/orders">Orders</Link>
+              {!!props.user.isAdmin && (<Link to="/users">Users (Admin)</Link>)}
             </div>
             : <div>
               {/* The navbar will show these links before you log in */}
@@ -53,7 +54,8 @@ const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
     userCart: state.userCart,
-    sessionCart: state.sessionCart
+    sessionCart: state.sessionCart,
+    user: state.user
   }
 }
 

@@ -60,6 +60,18 @@ router.get('/:id', (req, res, next) => {
   res.json(req.user);
 })
 
+router.put('/:id', (req, res, next) => {
+  req.user.update(req.body)
+  .then(user => res.json(user))
+  .catch(next);
+})
+
+router.delete('/:id', (req, res, next) => {
+  req.user.destroy()
+  .then(() => res.sendStatus(204))
+  .catch(next);
+})
+
 //all orders
 router.get('/:id/orders', isAdminOrSelf, (req, res, next) => {
   req.user.getOrders({
