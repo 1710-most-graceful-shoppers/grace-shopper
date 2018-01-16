@@ -28,7 +28,7 @@ export function deleteUser(userId) {
 export function fetchUsers() {
   return (dispatch) => {
     axios.get('/api/users')
-    .then(users => dispatch(gotUsers(users)))
+    .then(users => dispatch(gotUsers(users.data)))
     .catch(console.error);
   }
 }
