@@ -9,7 +9,7 @@ const AdminUser = (props) => {
         {props.users.map(user => (
           <li key={user.id}>
             {user.email}
-            {(user.isAdmin === false) ?
+            {!user.isAdmin ?
             (<button onClick={() => props.changeAdmin(user.id, {isAdmin: true})}>Add To Admin</button>) :
             (<button onClick={() => props.changeAdmin(user.id, {isAdmin: false})}>Remove From Admin</button>)
             }
