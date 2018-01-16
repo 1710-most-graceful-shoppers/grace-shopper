@@ -101,7 +101,7 @@ class SingleProduct extends Component {
                       <div className="review-info-top">
                         <div className="review-info-email">
                           <p>
-                            {review.user.email}
+                            {review.user && review.user.email}
                           </p>
                         </div>
                         <div className="review-info-rating">

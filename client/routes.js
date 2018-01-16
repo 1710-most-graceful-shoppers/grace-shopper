@@ -14,7 +14,7 @@ class Routes extends Component {
     this.props.loadInitialData()
     // this.props.loadProducts()// Products now loaded on Product component
     this.props.loadCategories()
-    this.props.loadUsers()
+    if (this.props.isLoggedIn) this.props.loadUsers();
   }
 
   render () {
