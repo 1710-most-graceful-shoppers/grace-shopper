@@ -19,24 +19,29 @@ router.param('id', (req, res, next, id) => {
 })
 
 router.get('/', (req, res, next) => {
-  Product.findAll({
-    include: [
-      {
-        model: Review,
-        include: [
-          {
-            model: User,
-            attributes: [
-              'email'
-            ]
-          }
-        ]
-      }
-    ]
-  })
+  Product.findAll()
     .then(products => res.send(products))
     .catch(next)
 })
+
+router.get('/:id', (req, res, next) => {
+  Product.findOne({
+    where: {
+      id: req.params.id
+    },
+    include: [{ model: Review,
+      include: [{model: User,
+        attributes: ['email']
+      }]
+    }]
+  })
+  .then(product => res.send(product))
+  .catch(next)
+})
+
+//This route won't get hit
+//Not restful
+//Use query params
 
 router.get('/categories/:name', (req, res, next) => {
   Category.findAll({

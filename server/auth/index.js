@@ -42,6 +42,7 @@ router.get('/me', (req, res) => {
 
 router.use('/google', require('./google'))
 
+//CG: move this to a utility file
 function addToCart(req, res, next) {
   if (req.session.cart.products.length) {
     Order.findOrCreate({
@@ -67,7 +68,7 @@ function addToCart(req, res, next) {
         return Promise.all(productsArr.map((product, index) => {
           let productFinder = (req.user.cart.products) ? req.user.cart.products.findIndex(prod => Number(prod.id) === Number(product.id)) : -1;
           if (productFinder !== -1) {
-            req.user.cart.addProduct(product, {
+            return req.user.cart.addProduct(product, {
               through: {
                 quantity: req.session.cart.products[index].product_order.quantity + req.user.cart.products[productFinder].product_order.quantity,
                 price: product.price
@@ -75,7 +76,7 @@ function addToCart(req, res, next) {
             })
           }
           else {
-            req.user.cart.addProduct(product, {
+            return req.user.cart.addProduct(product, {
               through: {
                 quantity: req.session.cart.products[index].product_order.quantity,
                 price: product.price
@@ -84,6 +85,9 @@ function addToCart(req, res, next) {
           }
         }))
       })
+    })
+    .then(() => {
+      req.session.cart = {products: []};
       res.json(req.user);
     })
     .catch(next)

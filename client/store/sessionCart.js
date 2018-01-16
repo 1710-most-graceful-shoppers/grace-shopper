@@ -4,6 +4,8 @@ import axios from 'axios';
 const GOT_SESSION_CART = 'GOT_SESSION_CART';
 const CLEAR_SESSION_CART = 'CLEAR_SESSION';
 
+
+//put logic here for cart vs session
 export function updateSessionCart(productId, quantity) {
   return (dispatch) => {
   axios.put('/api/sessions/cart', {
@@ -23,6 +25,14 @@ export function deleteFromSessionCart(productId) {
       }
     })
     .then(() => dispatch(fetchSessionCart()))
+    .catch(console.error);
+  }
+}
+
+export function placeSessionOrder(checkoutInfo, sessionCart) {
+  return (dispatch) => {
+    axios.post('/api/sessions/order', {checkoutInfo, sessionCart})
+    .then(cart => dispatch(gotSessionCart(cart)))
     .catch(console.error);
   }
 }
