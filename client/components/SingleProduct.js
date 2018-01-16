@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {updateCart, updateSessionCart, getSingleProduct} from '../store';
+import {Sidebar} from './index'
 
 class SingleProduct extends Component {
 
@@ -32,12 +33,15 @@ class SingleProduct extends Component {
   }
 
     render(){
-      const {products, addMe, userId, averageRating, isLoggedIn} = this.props;
+      const {products, addMe, userId, averageRating, isLoggedIn, ownProps} = this.props;
       const product = products[0];
 
       return product ? (
         <div>
-          <div className="single-view-container">
+          <div className="view-container">
+            <div className="sidebar-container">
+              <Sidebar ownProps={ownProps} />
+            </div>
             <div className="single-info-card">
               <div className="single-info-card-top">
                 <div className="single-info-card-name">
@@ -125,7 +129,8 @@ const mapState = (state, ownProps) => {
     products: state.products,
     productId: ownProps.match.params.productId,
     userId: state.user.id,
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    ownProps: ownProps
   }};
 
 const mapDispatch = (dispatch) => {

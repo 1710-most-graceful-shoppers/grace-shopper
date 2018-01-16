@@ -144,6 +144,7 @@ button {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  position: relative;
 }
 
 .single-info-card {
@@ -190,10 +191,6 @@ button {
   padding-top: 15px;
   padding-bottom: 15px;
   overflow: scroll;
-}
-
-.review-container {
-
 }
 
 .review-info-top {
