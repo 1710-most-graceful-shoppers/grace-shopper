@@ -2,6 +2,7 @@
 
 const CategoryRouter = require('express').Router();
 const {Category, Product} = require('../db/models');
+const {isAdmin} = require('./utils');
 
 CategoryRouter.param('id', (req, res, next, id) => {
   Category.findById(Number(id))
@@ -29,19 +30,19 @@ CategoryRouter.get('/:id', (req, res, next) => {
   res.json(req.category)
 })
 
-CategoryRouter.post('/', (req, res, next) => {
+CategoryRouter.post('/', isAdmin, (req, res, next) => {
   Category.create(req.body)
   .then(category => res.json(category))
   .catch(next);
 })
 
-CategoryRouter.put('/:id', (req, res, next) => {
+CategoryRouter.put('/:id', isAdmin, (req, res, next) => {
   req.category.update(req.body)
   .then(category => res.json(category))
   .catch(next);
 })
 
-CategoryRouter.delete('/:id', (req, res, next) => {
+CategoryRouter.delete('/:id', isAdmin, (req, res, next) => {
   req.category.destroy()
   .then(() => res.sendStatus(204))
   .catch(next);

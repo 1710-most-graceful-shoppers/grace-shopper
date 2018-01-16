@@ -22,15 +22,6 @@ const Order = db.define('order', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   }
-},
-  {
-  hooks: {
-    beforeUpdate: (order) => {
-      if (order.getDataValue('isSold')) {
-        order.setDataValue('status', 'Created')
-      }
-    }
-  }
 });
 
 module.exports = Order;
