@@ -11,7 +11,7 @@ class CheckoutForm extends Component {
   }
 
   render() {
-    const {user, sessionCart, submitUserOrder, submitCartOrder} = this.props;
+    const {user, sessionCart, submitUserOrder, submitCartOrder, promoChange} = this.props;
     const onSubmit = user.id ? (e) =>  submitUserOrder(e, user.id) : (e) => submitCartOrder(e, sessionCart);
 
     return (
@@ -43,6 +43,14 @@ class CheckoutForm extends Component {
                 name="payment"
               />
             </label>
+            <label className="form-group-label">Promo Code?
+            <input
+              onChange={promoChange}
+              className="form-group-label-input"
+              placeholder="Rhymes with schoolz"
+              name="coreyPromo"
+            />
+          </label>
           </div>
           <div className="form-group">
             <button
@@ -58,11 +66,12 @@ class CheckoutForm extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
     user: state.user,
     sessionCart: state.sessionCart,
-    userCart: state.userCart
+    userCart: state.userCart,
+    promoChange: ownProps.promoChange
   }
 };
 
@@ -70,14 +79,22 @@ const mapDispatchToProps = (dispatch) => {
   return {
     submitUserOrder: (e, userId) => {
       e.preventDefault();
-      // dispatch(placeUserOrder({address: e.target.address.value, email: e.target.email.value, payment: e.target.payment.value}, userId));
+      dispatch(placeUserOrder({
+        address: e.target.address.value,
+        email: e.target.email.value,
+        payment: e.target.payment.value,
+        coreyPromo: e.target.coreyPromo.value === 'CoreyRulezOmriDroolz',
+        isSold: true
+      }, userId));
     },
     submitCartOrder: (e, sessionCart) => {
       e.preventDefault();
       dispatch(placeSessionOrder({
         address: e.target.address.value,
         email: e.target.email.value,
-        payment: e.target.payment.value
+        payment: e.target.payment.value,
+        coreyPromo: e.target.coreyPromo.value === 'CoreyRulezOmriDroolz',
+        isSold: true
       }, sessionCart));
     }
   }

@@ -18,7 +18,9 @@ export function updateCart(userId, productId, quantity) {
       productId,
       quantity
     })
-    .then(() => dispatch(fetchCart(userId)))
+    .then(() => {
+      dispatch(fetchCart(userId));
+    })
     .catch(console.error);
   }
 }
@@ -30,13 +32,21 @@ export function deleteFromCart(userId, productId) {
         productId
       }
     })
-    .then(() => dispatch(fetchCart(userId)))
+    .then(() => {
+      dispatch(fetchCart(userId));
+    })
     .catch(console.error);
   }
 }
 
 export function placeUserOrder(checkoutInfo, userId) {
-  console.log(userId)
+  return (dispatch) => {
+    axios.post(`/api/users/${userId}/orders`, checkoutInfo)
+    .then(() => {
+      dispatch(clearCart());
+    })
+    .catch(console.error);
+  }
 }
 
 function gotCart(userCart) {

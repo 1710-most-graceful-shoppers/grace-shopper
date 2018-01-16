@@ -14,7 +14,6 @@ const Order = db.define('order', {
   },
   email: {
     type: Sequelize.STRING,
-    unique: true,
     validate: {
       isEmail: true
     }
