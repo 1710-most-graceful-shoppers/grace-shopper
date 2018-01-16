@@ -28,9 +28,14 @@ const Cart = (props) => {
         </div>
       )
     })}
+<<<<<<< HEAD
     <h3>Total Cost: {totalCost} coins</h3>
     <button>Checkout!</button>
     <CheckoutForm />
+=======
+    {/* USE STRIPE for payment processing */}
+    <h3>Total Cost: {totalCost} coins</h3><button>Checkout!</button>
+>>>>>>> master
     </div>
   ) : null;
 };
@@ -40,6 +45,8 @@ const mapState = (state) => ({
   sessionCart: state.sessionCart,
   userCart: state.userCart
 });
+
+//Utility function to handle this 
 
 const mapDispatch = (dispatch) => ({
   addMe: (userId, productId) => {userId ? dispatch(updateCart(userId, productId, 1)) : dispatch(updateSessionCart(productId, 1))},
