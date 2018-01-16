@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {updateCart, updateSessionCart, getSingleProduct} from '../store';
+import {updateCart, updateSessionCart, getSingleProduct, addNewReview } from '../store';
 import {Sidebar} from './index'
 
 class SingleProduct extends Component {
@@ -13,6 +13,7 @@ class SingleProduct extends Component {
       reviewRating: null
     };
     this.handleChange = this.handleChange.bind(this);
+    this.publishReview = this.publishReview.bind(this);
   }
 
   componentDidMount(){
@@ -30,6 +31,22 @@ class SingleProduct extends Component {
         reviewRating: evt.target.value
       })
     }
+  }
+
+  publishReview(){
+    let id = Number(this.props.match.params.id)
+    let review = {
+      text: this.state.reviewInput,
+      rating: Number(this.state.reviewRating),
+      productId: id,
+      userId: this.props.userId
+    }
+    this.props.addReview(review)
+    this.props.getProduct(id)
+    this.setState({
+      reviewInput: '',
+      reviewRating: null
+    })
   }
 
     render(){
@@ -100,11 +117,12 @@ class SingleProduct extends Component {
                 }
               </div>
               <hr />
-              <textarea className="review-textarea" name="reviewInput" onChange={this.handleChange} rows="14" cols="60" placeholder={isLoggedIn ? 'Leave feedback here:' : 'Log in or sign up to leave feedback'} />
+              <textarea className="review-textarea" name="reviewInput" value={this.state.reviewInput} onChange={this.handleChange} rows="14" cols="60" placeholder={isLoggedIn ? 'Leave feedback here:' : 'Log in or sign up to leave feedback'} />
               <div className="single-info-card-bottom">
                 <div className="single-info-card-rating">
                   <p>Rating:</p>
                   <select onChange={this.handleChange} name="reviewRating">
+                    <option>-</option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -113,7 +131,7 @@ class SingleProduct extends Component {
                   </select>
                 </div>
                 <div className="single-info-card-action">
-                  <button className="product-add" hidden={!isLoggedIn}>Submit</button>
+                  <button className="product-add" hidden={!isLoggedIn} onClick={this.publishReview}>Submit</button>
                 </div>
               </div>
             </div>
@@ -147,7 +165,8 @@ const mapDispatch = (dispatch) => {
       } else {
         return 'No Ratings'
       }
-    }
+    },
+    addReview: (review) => dispatch(addNewReview(review))
   }
 };
 
