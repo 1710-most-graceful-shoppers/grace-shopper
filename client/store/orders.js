@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const GET_ORDERS = 'GET_ORDER'
 
-function getOrders(orders) {
+function getOrdersAC(orders) {
   return {
     type: GET_ORDERS,
     orders
@@ -11,13 +11,13 @@ function getOrders(orders) {
 
 export function getOrders(userId) {
   return (dispatch) => {
-    axios.get(`/api/${userId}/orders`)
-      .then(res => res.data)
-      .then(orders => dispatch(getOrders))
+    axios.get(`/api/users/${userId}/orders`)
+      .then(res => dispatch(getOrdersAC(res.data)))
+      .catch(console.error);
   }
 }
 
-export default (initialState = {}, action) => {
+export default (initialState = [], action) => {
   switch (action.type) {
     case GET_ORDERS:
       return action.orders

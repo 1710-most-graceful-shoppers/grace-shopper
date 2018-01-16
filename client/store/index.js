@@ -7,7 +7,7 @@ import products from './products';
 import categories from './categories';
 import sessionCart from './sessionCart';
 import userCart from './userCart';
-import orders from './orders'
+import orders from './orders';
 
 const reducer = combineReducers({user, products, sessionCart, categories, userCart, orders})
 
@@ -23,3 +23,4 @@ export * from './products'
 export * from './sessionCart';
 export * from './categories';
 export * from './userCart';
+export * from './orders';
