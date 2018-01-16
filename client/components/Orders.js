@@ -10,11 +10,11 @@ class Orders extends Component {
   }
 
   componentDidMount() {
-    this.props.loadOrders(this.props.user.id);
+    this.props.loadUserOrders(this.props.user.id);
   }
 
   render() {
-    const { orders } = this.props;
+    const { orders, isAdmin } = this.props;
     let totalCost = 0;
     return (
       <div>
@@ -36,7 +36,7 @@ class Orders extends Component {
                     {
                       order.products.map(product => {
                         console.log(totalCost)
-                        totalCost += product.product_order.quantity * product.product_order.quantity.price;
+                        totalCost += product.product_order.quantity * product.product_order.price;
                         return (
                           <div key={product.id} className="cart-product">
                             <Link to={`/products/weapons/${product.id}`}><h4>Name: {product.title}</h4></Link>
@@ -65,13 +65,14 @@ class Orders extends Component {
 const mapState = (state) => {
   return {
     user: state.user,
+    isAdmin: !!state.user.isAdmin,
     orders: state.orders
    }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    loadOrders: (userId) => dispatch(getOrders(userId))
+    loadUserOrders: (userId) => dispatch(getOrders(userId))
   }
 }
 
