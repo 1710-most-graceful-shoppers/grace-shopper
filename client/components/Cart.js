@@ -27,7 +27,7 @@ class Cart extends Component {
         totalCost = totalCost + product.product_order.quantity * product.price;
         return (
           <div key={product.id} className="cart-product">
-            <Link to={`/products/${product.id}`}><h4>Name: {product.title}</h4></Link>
+            <Link to={`/products/weapons/${product.id}`}><h4>Name: {product.title}</h4></Link>
             <h4>Quantity: {product.product_order.quantity}
               <button onClick={() => addMe(userId, product.id)}>+</button>
               <button
