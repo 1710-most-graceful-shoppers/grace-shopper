@@ -26,21 +26,21 @@ class Orders extends Component {
                 <div className="order">
                   <div className="order-info">
                     <div className="order-id">
-                      <h2>Order ID {order.id}</h2>
+                      <h3>Order ID {order.id}</h3>
                     </div>
                     <div className="order-date">
-                      <h2>Order Date {order.createdAt}</h2>
+                      <h3>Order Date {order.createdAt.slice(0, 10)}</h3>
                     </div>
                   </div>
                   <div className="product-info">
                     {
                       order.products.map(product => {
-                        totalCost = totalCost + product.product_order.quantity * product.product_order.quantity.price;
+                        console.log(totalCost)
+                        totalCost += product.product_order.quantity * product.product_order.quantity.price;
                         return (
                           <div key={product.id} className="cart-product">
-                            <Link to={`/products/${product.id}`}><h4>Name: {product.title}</h4></Link>
-                            <h4>Quantity: {product.product_order.quantity}</h4>
-                            <h4>Price: {product.product_order.price} coins ; Subtotal: {product.product_order.price * product.product_order.quantity} coins</h4>
+                            <Link to={`/products/weapons/${product.id}`}><h4>Name: {product.title}</h4></Link>
+                            <h4>Quantity: {product.product_order.quantity} ; Price: {product.product_order.price} coins ; Subtotal: {product.product_order.price * product.product_order.quantity} coins</h4>
                           </div>
                         )
                     })}

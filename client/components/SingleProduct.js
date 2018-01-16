@@ -31,7 +31,6 @@ class SingleProduct extends Component {
             <img src={product.imageUrl} />
           </div>
           <h3>REVIEWS</h3>
-          <div />
         </div>
       ) : null
     }
