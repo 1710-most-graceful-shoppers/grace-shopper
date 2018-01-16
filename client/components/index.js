@@ -10,4 +10,3 @@ export {default as Sidebar} from './Sidebar'
 export {Login, Signup} from './auth-form'
 export {default as SingleProduct} from './SingleProduct.js';
 export {default as Cart} from './Cart';
-export {default as Reviews} from './Reviews';
