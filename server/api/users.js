@@ -1,10 +1,13 @@
 const router = require('express').Router()
 const {User, Product, Product_Order, Order} = require('../db/models')
+const {isAdmin, isAdminOrSelf} = require('./utils');
 module.exports = router
 
 //Obtaining the user.
 router.param('id', (req, res, next, id) => {
-  User.findById(id)
+  User.findById(id, {
+      attributes: ['id', 'email']
+  })
   .then(user => {
     if (!user) {
       let err = new Error('No User Found');
@@ -42,7 +45,7 @@ function cartHelper(req, res, next) {
   .catch(next)
 }
 
-router.get('/', (req, res, next) => {
+router.get('/', isAdminOrSelf, isAdmin, (req, res, next) => {
   User.findAll({
     // explicitly select only the id and email fields - even though
     // users' passwords are encrypted, it won't help if we just
@@ -58,7 +61,7 @@ router.get('/:id', (req, res, next) => {
 })
 
 //all orders
-router.get('/:id/orders', (req, res, next) => {
+router.get('/:id/orders', isAdminOrSelf, (req, res, next) => {
   req.user.getOrders({
     where: {
       isSold: true
@@ -73,14 +76,14 @@ router.get('/:id/orders', (req, res, next) => {
   .catch(next);
 });
 
-router.post('/:id/orders', cartHelper, (req, res, next) => {
+router.post('/:id/orders', isAdminOrSelf, cartHelper, (req, res, next) => {
   req.user.cart.update(req.body)
   .then(newOrder => res.json(newOrder))
   .catch(next);
 })
 
 //getting a logged-in user cart.
-router.get('/:id/cart', cartHelper, (req, res, next) => {
+router.get('/:id/cart', isAdminOrSelf, cartHelper, (req, res, next) => {
   res.json(req.user.cart)
 })
 
@@ -102,7 +105,7 @@ router.get('/:id/cart', cartHelper, (req, res, next) => {
 
 //setProducts method may overwrite all of your other instances - very confusing. Unsure if this happened earlier.
 //but addProduct will update the current join table instance if it is already created! Convenient!
-router.put('/:id/cart', cartHelper, (req, res, next) => {
+router.put('/:id/cart', isAdminOrSelf, cartHelper, (req, res, next) => {
   const {productId, quantity} = req.body;
 
   Product.findById(productId)
@@ -130,7 +133,7 @@ router.put('/:id/cart', cartHelper, (req, res, next) => {
   .catch(next);
 });
 
-router.delete('/:id/cart', cartHelper, (req, res, next) => {
+router.delete('/:id/cart', isAdminOrSelf, cartHelper, (req, res, next) => {
   const {productId} = req.body;
   req.user.cart.removeProducts([productId])
   .then(() => res.sendStatus(204))

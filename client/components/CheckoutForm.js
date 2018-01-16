@@ -6,8 +6,14 @@ class CheckoutForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      isDirty: false,
+      address: ''
     };
+    this.handleAddressChange = this.handleAddressChange.bind(this);
+  }
+
+  handleAddressChange = function(e) {
+    this.setState({address: e.target.value, isDirty: true})
   }
 
   render() {
@@ -16,12 +22,15 @@ class CheckoutForm extends Component {
 
     return (
      <div>
-      <form className="form" id="checkout-form" onSubmit={onSubmit}>
+      <form className="form-horizontal" id="checkout-form" onSubmit={onSubmit}>
         <fieldset>
           <legend>Checkout information here!</legend>
           <div className="form-group">
-            <label className="form-group-label">Shipping Information
+          {this.state.isDirty && this.state.address.length < 1 &&
+            <div className="alert alert-warning">Please enter an address</div>}
+            <label className="form-group-label">Shipping Information<br />
                 <textarea
+                  onChange={this.handleAddressChange}
                   className="form-group-label-input"
                   placeholder="Where you want dis?"
                   name="address"
@@ -29,21 +38,25 @@ class CheckoutForm extends Component {
                   cols="50"
                 />
             </label>
-            <label className="form-group-label">Email Address
+            <br />
+            <label className="form-group-label">Email Address<br />
               <input
                 className="form-group-label-input"
                 placeholder={user.email || 'New Email Here'}
                 name="email"
+                type="email"
               />
             </label>
-            <label className="form-group-label">Payment Method
+            <br />
+            <label className="form-group-label">Payment Method<br />
               <input
                 className="form-group-label-input"
                 placeholder="Gold? Galleons? Barter?"
                 name="payment"
               />
             </label>
-            <label className="form-group-label">Promo Code?
+            <br />
+            <label className="form-group-label">Promo Code?<br />
             <input
               onChange={promoChange}
               className="form-group-label-input"
@@ -51,6 +64,7 @@ class CheckoutForm extends Component {
               name="coreyPromo"
             />
           </label>
+          <br />
           </div>
           <div className="form-group">
             <button
@@ -84,7 +98,8 @@ const mapDispatchToProps = (dispatch) => {
         email: e.target.email.value,
         payment: e.target.payment.value,
         coreyPromo: e.target.coreyPromo.value === 'CoreyRulezOmriDroolz',
-        isSold: true
+        isSold: true,
+        status: 'Created'
       }, userId));
     },
     submitCartOrder: (e, sessionCart) => {
@@ -94,7 +109,8 @@ const mapDispatchToProps = (dispatch) => {
         email: e.target.email.value,
         payment: e.target.payment.value,
         coreyPromo: e.target.coreyPromo.value === 'CoreyRulezOmriDroolz',
-        isSold: true
+        isSold: true,
+        status: 'Created'
       }, sessionCart));
     }
   }
